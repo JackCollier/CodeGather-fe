@@ -22,17 +22,34 @@ export default function SignUp() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
       >
-        <View style={styles.form}>
+        <View style={{ ...styles.form, padding: 10, width: "100%" }}>
+          {/* Your Details*/}
           <View>
-            <Text style={{ ...styles.text_input_label }}>Email</Text>
-            <TextInput style={styles.text_input} placeholder="Email..." />
+            <Text style={{ ...styles.text_input_label }}>Your Detail</Text>
+            <View style={{ flexDirection: "row" }}>
+              <TextInput
+                style={{ ...styles.text_input, minWidth: "50%" }}
+                placeholder="Firstname..."
+              />
+
+              <TextInput
+                style={{ ...styles.text_input, minWidth: "50%" }}
+                placeholder="Lastname..."
+              />
+            </View>
+
+            <View>
+              <TextInput style={styles.text_input} placeholder="Email..." />
+            </View>
+          </View>
+          {/* */}
+          <View>
+            <Text style={{ ...styles.text_input_label }}>
+              Creat Your username and password
+            </Text>
+            <TextInput style={styles.text_input} placeholder="Username..." />
           </View>
           <View>
-            <Text style={{ ...styles.text_input_label }}>Password</Text>
-            <TextInput style={styles.text_input} placeholder="Password..." />
-          </View>
-          <View>
-            <Text style={{ ...styles.text_input_label }}>Password</Text>
             <TextInput style={styles.text_input} placeholder="Password..." />
           </View>
           <Pressable style={styles.btn}>
