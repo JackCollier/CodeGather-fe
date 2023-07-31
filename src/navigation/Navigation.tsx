@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import Welcome from "../screens/welcome/Welcome";
 import SignIn from "../screens/welcome/SignIn";
+import SignUp from "../screens/welcome/SignUp";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,16 @@ export default function Navigation() {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="Signin" component={SignIn} />
+        <Stack.Screen
+          name="Signin"
+          component={SignIn}
+          options={{ title: "Sign in" }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={SignUp}
+          options={{ title: "Sign up" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
