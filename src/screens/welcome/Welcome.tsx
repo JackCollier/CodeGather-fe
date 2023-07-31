@@ -23,24 +23,24 @@ const Welcome = () => {
 const WelcomeStyles = StyleSheet.create({
     container: styles.outerContainer,
     logo: {
-        fontSize: 40,
+        fontSize: 48,
         fontWeight: "bold",
         letterSpacing: 2,
     },
 
     welcome_logo_container: {
-        backgroundColor: "orange",
+        marginTop: -80,
         marginBottom: 30,
     },
 
     welcome_btn_container: {
-        backgroundColor: "red",
+        gap: 15,
     },
     welcome_btn: {
-        paddingHorizontal: 8,
-        paddingVertical: 4,
+        paddingHorizontal: 45,
+        paddingVertical: 9,
         backgroundColor: "#8cb3d9",
-        borderRadius: 4,
+        borderRadius: 2,
     },
     welcome_btn_text: {
         fontSize: 20,
