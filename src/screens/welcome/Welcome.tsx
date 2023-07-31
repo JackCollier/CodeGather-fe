@@ -1,14 +1,17 @@
 import { View, Text, SafeAreaView, StyleSheet, Pressable } from "react-native";
 import { styles } from "../../styles/Styling";
 
-const Welcome = () => {
+const Welcome = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.outerContainer}>
       <View style={WelcomeStyles.welcome_logo_container}>
         <Text style={WelcomeStyles.logo}>{"<CodeGather/>"}</Text>
       </View>
       <View style={WelcomeStyles.welcome_btn_container}>
-        <Pressable style={WelcomeStyles.welcome_btn}>
+        <Pressable
+          style={WelcomeStyles.welcome_btn}
+          onPress={() => navigation.navigate("Signin")}
+        >
           <Text style={WelcomeStyles.welcome_btn_text}>Login</Text>
         </Pressable>
 
@@ -23,7 +26,7 @@ const Welcome = () => {
 const WelcomeStyles = StyleSheet.create({
   container: styles.outerContainer,
   logo: {
-    fontSize: 48,
+    fontSize: 45,
     fontWeight: "bold",
     letterSpacing: 2,
   },
