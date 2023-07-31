@@ -22,11 +22,14 @@ export default function SignIn() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
       >
-        <View style={SignInStyles.signin_form}>
+        <View style={styles.form}>
           <View>
             <Text style={{ ...styles.text_input_label }}>Email</Text>
             <TextInput
-              style={{ ...styles.text_input, backgroundColor: "white" }}
+              style={{
+                ...styles.text_input,
+                backgroundColor: "white",
+              }}
               placeholder="Email..."
             />
           </View>
@@ -59,16 +62,4 @@ export default function SignIn() {
   );
 }
 
-const SignInStyles = StyleSheet.create({
-  signin_form: {
-    borderWidth: 0.2,
-    gap: 30,
-    padding: 50,
-    paddingVertical: 70,
-    borderColor: "black",
-    borderRadius: 2,
-    marginBottom: 50,
-
-    backgroundColor: "white",
-  },
-});
+const SignInStyles = StyleSheet.create({});
