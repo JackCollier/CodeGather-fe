@@ -3,21 +3,19 @@ import { styles } from "../../styles/Styling";
 
 const Welcome = () => {
     return (
-        <View>
-            <Text>Welcome</Text>
-            <Text>Welcome</Text>
-            <Text>Welcome</Text>
-            <Text>Welcome</Text>
-            <Text>Welcome</Text>
-            <Text>Welcome</Text>
-            <Text>Welcome</Text>
-            <Text>Welcome</Text>
-            <Text>Welcome</Text>
-            <Text>Welcome</Text>
-        </View>
+        <SafeAreaView style={styles.outerContainer}>
+            <View>
+                <Text>CodeGather</Text>
+            </View>
+            <View>
+                
+            </View>
+        </SafeAreaView>
     );
 };
 
-const WelcomeStyles = StyleSheet.create({});
+const WelcomeStyles = StyleSheet.create({
+    container: styles.outerContainer,
+});
 
 export default Welcome;
