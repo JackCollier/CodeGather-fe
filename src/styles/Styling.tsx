@@ -19,4 +19,14 @@ export const styles = StyleSheet.create({
     height: 40,
     borderColor: "#8cb3d9",
   },
+  btn: {
+    paddingHorizontal: 45,
+    paddingVertical: 9,
+    backgroundColor: "#8cb3d9",
+    borderRadius: 2,
+  },
+  btn_text: {
+    fontSize: 20,
+    textAlign: "center",
+  },
 });
