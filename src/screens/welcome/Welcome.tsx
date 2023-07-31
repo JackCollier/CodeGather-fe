@@ -12,7 +12,7 @@ const Welcome = ({ navigation }: any) => {
           style={WelcomeStyles.welcome_btn}
           onPress={() => navigation.navigate("Signin")}
         >
-          <Text style={WelcomeStyles.welcome_btn_text}>Log in</Text>
+          <Text style={WelcomeStyles.welcome_btn_text}>Sign in</Text>
         </Pressable>
 
         <Pressable
