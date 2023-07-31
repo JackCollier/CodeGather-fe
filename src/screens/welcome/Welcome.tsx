@@ -12,11 +12,14 @@ const Welcome = ({ navigation }: any) => {
           style={WelcomeStyles.welcome_btn}
           onPress={() => navigation.navigate("Signin")}
         >
-          <Text style={WelcomeStyles.welcome_btn_text}>Login</Text>
+          <Text style={WelcomeStyles.welcome_btn_text}>Log in</Text>
         </Pressable>
 
-        <Pressable style={WelcomeStyles.welcome_btn}>
-          <Text style={WelcomeStyles.welcome_btn_text}>Signup</Text>
+        <Pressable
+          style={WelcomeStyles.welcome_btn}
+          onPress={() => navigation.navigate("Signup")}
+        >
+          <Text style={WelcomeStyles.welcome_btn_text}>Sign up</Text>
         </Pressable>
       </View>
     </SafeAreaView>
