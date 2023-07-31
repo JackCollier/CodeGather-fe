@@ -1,9 +1,7 @@
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import { styles } from "../../styles/styling";
 
-const Welcome = () => {
-  <SafeAreaView style={styles.outerContainer}></SafeAreaView>;
-};
+const Welcome = () => {};
 
 const WelcomeStyles = StyleSheet.create({});
 
