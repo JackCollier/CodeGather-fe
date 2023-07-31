@@ -9,7 +9,13 @@ export default function Navigation() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Welcome" component={Welcome} />
+                <Stack.Screen
+                    name="Welcome"
+                    component={Welcome}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
