@@ -4,7 +4,7 @@ import { styles } from "../../styles/Styling";
 const Welcome = () => {
     return (
         <SafeAreaView style={styles.outerContainer}>
-            <View>
+            <View style={WelcomeStyles.welcome_logo_container}>
                 <Text style={WelcomeStyles.logo}>{"<CodeGather/>"}</Text>
             </View>
             <View style={WelcomeStyles.welcome_btn_container}>
@@ -27,7 +27,12 @@ const WelcomeStyles = StyleSheet.create({
         fontWeight: "bold",
         letterSpacing: 2,
     },
-    welcome_logo_container: {},
+
+    welcome_logo_container: {
+        backgroundColor: "orange",
+        marginBottom: 30,
+    },
+
     welcome_btn_container: {
         backgroundColor: "red",
     },
