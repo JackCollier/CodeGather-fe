@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
   },
   text_input_label: {
     fontSize: 20,
@@ -13,7 +14,7 @@ export const styles = StyleSheet.create({
   text_input: {
     borderWidth: 1,
     padding: 3,
-    borderRadius: 0,
+    borderRadius: 2,
     minWidth: "75%",
     fontSize: 20,
     height: 40,
