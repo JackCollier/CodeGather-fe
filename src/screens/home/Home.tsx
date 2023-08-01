@@ -1,12 +1,12 @@
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
-// import {SafeAreaView} from 'react-native-safe-area-context'
+import { View, Text, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
 import { styles } from "../../styles/Styling";
 
 export default function Home() {
   return (
-    <SafeAreaView>
-      <View style={styles.outerContainer}>
+    <SafeAreaView style={styles.outerContainer}>
+      <View>
         <View style={homeStyles.nav_container}>
           <Text>Nav</Text>
         </View>
@@ -26,14 +26,15 @@ const homeStyles = StyleSheet.create({
     flex: 0.1,
     borderColor: "orange",
     borderWidth: 2,
+    minWidth: "100%",
   },
   horizontal_list_container: {
-    flex: 0.5,
+    flex: 0.3,
     borderColor: "orange",
     borderWidth: 2,
   },
   vertical_list_container: {
-    flex: 0.5,
+    flex: 1,
     borderColor: "orange",
     borderWidth: 2,
   },
