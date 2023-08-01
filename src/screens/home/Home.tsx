@@ -5,6 +5,7 @@ import {
   TextInput,
   Image,
   FlatList,
+  Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -130,6 +131,26 @@ export default function Home() {
     );
   };
 
+  const renderVerticalItems = ({ item }: { item: Article }) => {
+    return (
+      <View style={homeStyles.verticalCard}>
+        <View style={homeStyles.bigImgContainer}>
+          <Image
+            source={{ uri: item.event_img_url }}
+            style={homeStyles.bigImg}
+          />
+        </View>
+        <View style={{ gap: 13 }}>
+          <Text>{item.title}</Text>
+          <Text>{item.username}</Text>
+          <Text>{item.date}</Text>
+          <Text>{item.location}</Text>
+          <Text>Attending: {item.attending.length}</Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.outerContainer}>
       <View>
@@ -147,7 +168,12 @@ export default function Home() {
           ></FlatList>
         </View>
         <View style={homeStyles.vertical_list_container}>
-          <Text>Vertical FlatList</Text>
+          <FlatList
+            data={articles}
+            renderItem={renderVerticalItems}
+            keyExtractor={(item) => item.title}
+            horizontal={false}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -185,5 +211,27 @@ const homeStyles = StyleSheet.create({
   smallImg: {
     width: "80%",
     height: 90,
+  },
+  verticalCard: {
+    borderWidth: 1,
+    borderColor: "gray",
+    padding: 2,
+    margin: 2,
+    width: "98%",
+    height: 250,
+    justifyContent: "space-around",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  bigImgContainer: {
+    width: Dimensions.get("window").width * 0.4,
+    height: Dimensions.get("window").height * 0.25,
+    borderRadius: 5,
+    justifyContent: "flex-start",
+  },
+  bigImg: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
 });
