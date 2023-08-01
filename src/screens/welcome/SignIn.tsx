@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { styles } from "../../styles/Styling";
 
-export default function SignIn() {
+export default function SignIn({ navigation }: any) {
   return (
     <SafeAreaView
       style={{
@@ -31,7 +31,10 @@ export default function SignIn() {
             <Text style={{ ...styles.text_input_label }}>Password</Text>
             <TextInput style={styles.text_input} placeholder="Password..." />
           </View>
-          <Pressable style={styles.btn}>
+          <Pressable
+            style={styles.btn}
+            onPress={() => navigation.navigate("Tab")}
+          >
             <Text style={styles.btn_text}>Sign in</Text>
           </Pressable>
         </View>
