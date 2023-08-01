@@ -1,5 +1,14 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faMapLocationDot,
+  faFilter,
+  faUser,
+  faHome,
+  faTicket,
+  faSquarePlus,
+} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { styles } from "../../styles/Styling";
 
@@ -8,7 +17,9 @@ export default function Home() {
     <SafeAreaView style={styles.outerContainer}>
       <View>
         <View style={homeStyles.nav_container}>
-          <Text>Nav</Text>
+          <FontAwesomeIcon icon={faMapLocationDot} size={35} />
+          <TextInput style={styles.text_input} placeholder="Search" />
+          <FontAwesomeIcon icon={faFilter} size={35} />
         </View>
         <View style={homeStyles.horizontal_list_container}>
           <Text>Horizonatal FlatList</Text>
@@ -27,6 +38,9 @@ const homeStyles = StyleSheet.create({
     borderColor: "orange",
     borderWidth: 2,
     minWidth: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
   },
   horizontal_list_container: {
     flex: 0.3,
