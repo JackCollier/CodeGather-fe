@@ -11,10 +11,12 @@ import {
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { styles } from "../../styles/Styling";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCityData } from "../../utils/CityApi";
 
 export default function SignUp() {
   const [selected, setSelected] = useState("");
+  const [cityList, setCityList] = useState([]);
 
   const mockLocationData = [
     { key: 1, value: "London" },
@@ -28,6 +30,17 @@ export default function SignUp() {
     { key: 9, value: "Manchester" },
     { key: 10, value: "Mewport" },
   ];
+
+  useEffect(() => {
+    getCityData().then((res) => {
+      const formattedCities = res.results.map(
+        (item: { name: string }, index: number) => {
+          return { key: index, value: item.name };
+        }
+      );
+      setCityList(formattedCities);
+    });
+  }, []);
 
   return (
     <SafeAreaView
@@ -73,7 +86,7 @@ export default function SignUp() {
               <Text style={{ ...styles.text_input_label }}>Your Location</Text>
               <SelectList
                 setSelected={(val: string) => setSelected(val)}
-                data={mockLocationData}
+                data={cityList}
                 save="value"
                 boxStyles={{ borderColor: "#8cb3d9" }}
                 dropdownStyles={{ borderColor: "#8cb3d9" }}
