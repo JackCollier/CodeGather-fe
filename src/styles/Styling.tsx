@@ -44,4 +44,12 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
+  row_space_between: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  row_flex_start: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+  },
 });
