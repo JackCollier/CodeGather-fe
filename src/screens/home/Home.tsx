@@ -174,9 +174,18 @@ export default function Home() {
         </View>
         <View style={{ gap: 4 }}>
           <Text style={{ fontSize: 20 }}>{item.title}</Text>
-          <Text>{item.date}</Text>
-          <Text>{item.location}</Text>
-          <Text>Attending: {item.attending.length}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text>{item.date}</Text>
+            <Text>{item.location}</Text>
+          </View>
+          <Text style={{ maxWidth: "50%" }}>{item.topics}</Text>
+          <Text>{item.description.slice(0, 20) + "..."}</Text>
+          <Text> {item.attending.length}</Text>
         </View>
       </View>
     );
