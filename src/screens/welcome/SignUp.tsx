@@ -18,19 +18,6 @@ export default function SignUp() {
   const [selected, setSelected] = useState("");
   const [cityList, setCityList] = useState([]);
 
-  const mockLocationData = [
-    { key: 1, value: "London" },
-    { key: 2, value: "Liverpool" },
-    { key: 3, value: "Manchester" },
-    { key: 4, value: "Manchester" },
-    { key: 5, value: "Manchester" },
-    { key: 6, value: "Manchester" },
-    { key: 7, value: "Manchester" },
-    { key: 8, value: "Manchester" },
-    { key: 9, value: "Manchester" },
-    { key: 10, value: "Mewport" },
-  ];
-
   useEffect(() => {
     getCityData().then((res) => {
       const formattedCities = res.results.map(
