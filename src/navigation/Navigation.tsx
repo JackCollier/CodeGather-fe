@@ -4,13 +4,37 @@ import { NavigationContainer } from "@react-navigation/native";
 import Welcome from "../screens/welcome/Welcome";
 import SignIn from "../screens/welcome/SignIn";
 import SignUp from "../screens/welcome/SignUp";
+import Home from "../screens/home/Home";
 
 const Stack = createNativeStackNavigator();
+const BottomTab = createBottomTabNavigator();
+
+function Tab() {
+  return (
+    <BottomTab.Navigator>
+      <BottomTab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </BottomTab.Navigator>
+  );
+}
 
 export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="Tab"
+          component={Tab}
+          options={{
+            headerShown: false,
+          }}
+        />
+
         <Stack.Screen
           name="Welcome"
           component={Welcome}
