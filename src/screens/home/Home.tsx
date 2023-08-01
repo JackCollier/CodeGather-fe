@@ -32,6 +32,8 @@ export default function Home() {
     event_img_url: string;
     location: string;
     date: string;
+    description: string;
+    topics: string[];
     attending: Profile[];
   };
 
@@ -49,6 +51,8 @@ export default function Home() {
           "https://solguruz.com/wp-content/uploads/2022/09/ReactJS-Framework-Benefits.png",
         location: "Manchester",
         date: "26/09/2023",
+        description: "",
+        topics: [],
         attending: [{ userName: "ben" }],
       },
       {
@@ -133,16 +137,30 @@ export default function Home() {
 
   const renderVerticalItems = ({ item }: { item: Article }) => {
     return (
-      <View style={homeStyles.verticalCard}>
-        <View style={homeStyles.bigImgContainer}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          height: 200,
+          paddingVertical: 10,
+        }}
+      >
+        <View
+          style={{
+            width: 160,
+            height: "100%",
+            backgroundColor: "grey",
+            marginRight: 20,
+          }}
+        >
           <Image
             source={{ uri: item.event_img_url }}
-            style={homeStyles.bigImg}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </View>
-        <View style={{ gap: 13 }}>
-          <Text>{item.title}</Text>
-          <Text>{item.username}</Text>
+        <View style={{ gap: 4 }}>
+          <Text style={{ fontSize: 20 }}>{item.title}</Text>
           <Text>{item.date}</Text>
           <Text>{item.location}</Text>
           <Text>Attending: {item.attending.length}</Text>
@@ -223,15 +241,15 @@ const homeStyles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
-  bigImgContainer: {
-    width: Dimensions.get("window").width * 0.4,
-    height: Dimensions.get("window").height * 0.25,
-    borderRadius: 5,
-    justifyContent: "flex-start",
-  },
-  bigImg: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-  },
+  //   bigImgContainer: {
+  //     width: Dimensions.get("window").width * 0.4,
+  //     height: Dimensions.get("window").height * 0.25,
+  //     borderRadius: 5,
+  //     justifyContent: "flex-start",
+  //   },
+  //   bigImg: {
+  //     width: "100%",
+  //     height: "100%",
+  //     objectFit: "cover",
+  //   },
 });
