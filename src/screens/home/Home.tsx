@@ -23,7 +23,6 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [articles, setArticles] = useState<Article[]>([]);
-  console.log(articles);
 
   type Article = {
     event_id: number;
@@ -53,7 +52,7 @@ export default function Home() {
         date: "26/09/2023",
         description:
           "Join our React Study Group to learn and discuss React concepts and best practices.",
-        topics: ["React", "Frontend Development", "Web Development"],
+        topics: ["React", "Frontend", "Web Development"],
         attending: [{ userName: "ben" }],
       },
       {
@@ -83,7 +82,7 @@ export default function Home() {
         date: "05/11/2023",
         description:
           "Enhance your JavaScript skills at our interactive JavaScript Workshop.",
-        topics: ["JavaScript", "Frontend Development", "Web Development"],
+        topics: ["JavaScript", "Frontend", "Web Development"],
         attending: [
           { userName: "david" },
           { userName: "emma" },
@@ -150,42 +149,31 @@ export default function Home() {
 
   const renderVerticalItems = ({ item }: { item: Article }) => {
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          height: 200,
-          paddingVertical: 10,
-        }}
-      >
-        <View
-          style={{
-            width: 160,
-            height: "100%",
-            backgroundColor: "grey",
-            marginRight: 20,
-          }}
-        >
+      <View style={homeStyles.verticalCard}>
+        <View style={homeStyles.bigImgContainer}>
           <Image
             source={{ uri: item.event_img_url }}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={homeStyles.bigImg}
           />
         </View>
         <View style={{ gap: 4 }}>
           <Text style={{ fontSize: 20 }}>{item.title}</Text>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
+          <View style={styles.row_space_between}>
             <Text>{item.date}</Text>
             <Text>{item.location}</Text>
           </View>
-          <Text style={{ maxWidth: "50%" }}>{item.topics}</Text>
-          <Text>{item.description.slice(0, 20) + "..."}</Text>
-          <Text> {item.attending.length}</Text>
+          <View style={styles.row_flex_start}>
+            <View style={{ width: 100 }}>
+              <Text style={{}}>{item.topics[0]}</Text>
+              <Text style={{}}>{item.topics[1]}</Text>
+            </View>
+            <View style={{ width: 100 }}>
+              <Text style={{}}>{item.topics[2]}</Text>
+              <Text style={{}}>{item.topics[3]}</Text>
+            </View>
+          </View>
+          <Text>{item.description.slice(0, 70) + "..."}</Text>
+          <Text>Attending: {item.attending.length}</Text>
         </View>
       </View>
     );
@@ -253,25 +241,22 @@ const homeStyles = StyleSheet.create({
     height: 90,
   },
   verticalCard: {
-    borderWidth: 1,
-    borderColor: "gray",
-    padding: 2,
-    margin: 2,
-    width: "98%",
-    height: 250,
-    justifyContent: "space-around",
-    alignItems: "center",
     flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    height: 240,
+    paddingVertical: 10,
+    maxWidth: Dimensions.get("window").width / 2,
   },
-  //   bigImgContainer: {
-  //     width: Dimensions.get("window").width * 0.4,
-  //     height: Dimensions.get("window").height * 0.25,
-  //     borderRadius: 5,
-  //     justifyContent: "flex-start",
-  //   },
-  //   bigImg: {
-  //     width: "100%",
-  //     height: "100%",
-  //     objectFit: "cover",
-  //   },
+  bigImgContainer: {
+    width: 160,
+    height: "100%",
+    borderWidth: 1,
+    marginRight: 20,
+  },
+  bigImg: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
 });
