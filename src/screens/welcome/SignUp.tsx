@@ -13,6 +13,8 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { styles } from "../../styles/Styling";
 import { useEffect, useState } from "react";
 import { getCityData } from "../../utils/CityApi";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 
 export default function SignUp() {
   const [selected, setSelected] = useState("");
@@ -44,7 +46,7 @@ export default function SignUp() {
           <View style={{ ...styles.form, padding: 10, width: "100%" }}>
             {/* Your Details*/}
             <View>
-              <Text style={{ ...styles.text_input_label }}>Your Detail</Text>
+              <Text style={{ ...styles.text_input_label }}>Your Details</Text>
               <View style={{ flexDirection: "row" }}>
                 <TextInput
                   style={{ ...styles.text_input, minWidth: "50%" }}
@@ -56,17 +58,30 @@ export default function SignUp() {
                   placeholder="Lastname..."
                 />
               </View>
-
               <View>
-                <TextInput style={styles.text_input} placeholder="Email..." />
+                <TextInput
+                  style={styles.text_input}
+                  placeholder="Username..."
+                />
+              </View>
+              <View
+                style={{ ...styles.row_space_around, alignItems: "center" }}
+              >
+                <Text>Date Of Birth:</Text>
+                <RNDateTimePicker
+                  mode="date"
+                  value={new Date()}
+                  minimumDate={new Date(1940, 0, 1)}
+                  maximumDate={new Date(2023, 10, 20)}
+                />
               </View>
             </View>
             {/* */}
             <View>
               <Text style={{ ...styles.text_input_label }}>
-                Creat Your username and password
+                Create Your Email and password
               </Text>
-              <TextInput style={styles.text_input} placeholder="Username..." />
+              <TextInput style={styles.text_input} placeholder="Email..." />
               <TextInput style={styles.text_input} placeholder="Password..." />
             </View>
             <View>
