@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -21,7 +22,7 @@ import React from "react";
 import { styles } from "../../styles/Styling";
 import { useState, useEffect } from "react";
 
-export default function Home() {
+export default function Home({ navigation }: any) {
   const [articles, setArticles] = useState<Article[]>([]);
 
   type Article = {
@@ -132,32 +133,42 @@ export default function Home() {
 
   const renderHorizontalItems = ({ item }: { item: Article }) => {
     return (
-      <View style={homeStyles.horizontalCard}>
-        <Text>{item.title}</Text>
-        <Image
-          source={{ uri: item.event_img_url }}
-          style={homeStyles.smallImg}
-        />
-        <Text>{item.date}</Text>
-        <View style={{ flexDirection: "row", gap: 5 }}>
-          <Text>{item.location}</Text>
-          <Text>Attending: {item.attending.length}</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("SingleEventPage")}>
+        <View style={homeStyles.horizontalCard}>
+          <Text>{item.title}</Text>
+          <Image
+            source={{ uri: item.event_img_url }}
+            style={homeStyles.smallImg}
+          />
+          <Text>{item.date}</Text>
+          <View style={{ flexDirection: "row", gap: 5 }}>
+            <Text>{item.location}</Text>
+            <Text>Attending: {item.attending.length}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
   const renderVerticalItems = ({ item }: { item: Article }) => {
     return (
       <View style={homeStyles.verticalCard}>
-        <View style={homeStyles.bigImgContainer}>
-          <Image
-            source={{ uri: item.event_img_url }}
-            style={homeStyles.bigImg}
-          />
-        </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SingleEventPage")}
+        >
+          <View style={homeStyles.bigImgContainer}>
+            <Image
+              source={{ uri: item.event_img_url }}
+              style={homeStyles.bigImg}
+            />
+          </View>
+        </TouchableOpacity>
         <View style={{ gap: 4 }}>
-          <Text style={{ fontSize: 20, maxWidth: 200 }}>{item.title}</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SingleEventPage")}
+          >
+            <Text style={{ fontSize: 20, maxWidth: 200 }}>{item.title}</Text>
+          </TouchableOpacity>
           <View style={{ ...styles.row_space_between, maxWidth: 185 }}>
             <Text>{item.date}</Text>
             <Text>{item.location}</Text>
@@ -167,10 +178,14 @@ export default function Home() {
               <Text style={{}}>{item.topics[0] + " " + item.topics[1]}</Text>
             </View>
           </View>
-          <Text style={{ maxWidth: 200 }}>
-            {item.description.slice(0, 60) + "..."}
-          </Text>
-          <Text>Attending: {item.attending.length}</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SingleEventPage")}
+          >
+            <Text style={{ maxWidth: 200 }}>
+              {item.description.slice(0, 60) + "..."}
+            </Text>
+            <Text>Attending: {item.attending.length}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
