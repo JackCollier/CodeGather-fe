@@ -8,6 +8,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Touchable,
+  TouchableOpacity,
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { styles } from "../../styles/Styling";
@@ -16,9 +18,35 @@ import { getCityData } from "../../utils/CityApi";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+
 export default function SignUp() {
   const [selected, setSelected] = useState("");
   const [cityList, setCityList] = useState([]);
+
+  // const [date ,setDate] = useState(new Date())
+  // const [showPicker, setShowPicker] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState<string>("date");
+  const [show, setShow] = useState(false);
+
+  const onChange = (selectedDate: any) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(new Date(currentDate.nativeEvent.timestamp));
+  };
+
+  const showMode = (currentMode: string) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  //   DateTimePickerAndroid.open(params: AndroidNativeProps)
+  // DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
 
   useEffect(() => {
     getCityData().then((res) => {
@@ -67,13 +95,25 @@ export default function SignUp() {
               <View
                 style={{ ...styles.row_space_around, alignItems: "center" }}
               >
-                <Text>Date Of Birth:</Text>
-                <RNDateTimePicker
+                <TouchableOpacity onPress={() => setShow(!show)}>
+                  <Text>Date Of Birth:</Text>
+                </TouchableOpacity>
+                {/* <RNDateTimePicker
                   mode="date"
                   value={new Date()}
                   minimumDate={new Date(1940, 0, 1)}
                   maximumDate={new Date(2023, 10, 20)}
-                />
+                /> */}
+                {show && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    onChange={onChange}
+                  />
+                )}
+                <Text>{date.toLocaleDateString()}</Text>
               </View>
             </View>
             {/* */}
