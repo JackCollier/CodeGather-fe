@@ -37,7 +37,7 @@ export default function SingleEventPage({
         event_img_url:
           "https://solguruz.com/wp-content/uploads/2022/09/ReactJS-Framework-Benefits.png",
         location: "Manchester",
-        date: "26/09/2023|4:00pm-6:00pm",
+        date: "26/09/2023",
         description:
           "Join our React Study Group to learn and discuss React concepts and best practices.",
         topics: ["React", "Frontend", "Web Development"],
@@ -129,7 +129,7 @@ export default function SingleEventPage({
   }, []);
 
   const renderTopics = ({ item }: { item: string[] }) => {
-    return <Text>{item}</Text>;
+    return <Text style={{ fontSize: 20 }}>{item}</Text>;
   };
 
   return (
@@ -139,6 +139,7 @@ export default function SingleEventPage({
           justifyContent: "space-between",
           alignItems: "flex-end",
           flexDirection: "row",
+          borderWidth: 1,
           marginBottom: 2,
         }}
       >
@@ -151,30 +152,48 @@ export default function SingleEventPage({
           style={{ height: 200 }}
         />
       </View>
-      <View style={{ ...styles.row_space_between, flexDirection: "row" }}>
-        <Text>{article.username}</Text>
-        <Text>{article.location}</Text>
-        <Text>
+      <View
+        style={{
+          ...styles.row_space_between,
+          flexDirection: "row",
+          marginTop: 10,
+        }}
+      >
+        <Text style={{ fontSize: 20 }}>{article.username}</Text>
+        <Text style={{ fontSize: 20 }}>{article.location}</Text>
+        <Text style={{ fontSize: 20 }}>
           Attending:{article.attending?.length + "/" + article.size_limit}
         </Text>
       </View>
       <View
         style={{
           flexDirection: "row",
-          borderWidth: 1,
           borderColor: "grey",
           marginTop: 10,
-          width: 500,
+          width: "100%",
+          justifyContent: "space-between",
+          padding: 2,
         }}
       >
         <View>
           <FlatList data={article.topics} renderItem={renderTopics} />
-          <Pressable style={{ borderWidth: 2 }}>
+          <Pressable
+            style={{
+              alignSelf: "center",
+              borderColor: "#8cb3d9",
+              backgroundColor: "#8cb3d9",
+              paddingHorizontal: 10,
+              paddingVertical: 9,
+              borderRadius: 2,
+              borderWidth: 0.5,
+            }}
+          >
             <Text>Attend Event</Text>
           </Pressable>
         </View>
-        <Text>{article.description}</Text>
-        <View style={{}}></View>
+        <View style={{ maxWidth: 200 }}>
+          <Text style={{ fontSize: 16 }}>{article.description}</Text>
+        </View>
       </View>
     </View>
   );
