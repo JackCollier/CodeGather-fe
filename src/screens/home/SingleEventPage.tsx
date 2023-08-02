@@ -133,7 +133,13 @@ export default function SingleEventPage({
   };
 
   return (
-    <View style={{ padding: 5, paddingHorizontal: 10 }}>
+    <View
+      style={{
+        padding: 5,
+        paddingHorizontal: 10,
+        justifyContent: "center",
+      }}
+    >
       <View
         style={{
           justifyContent: "space-between",
@@ -159,9 +165,9 @@ export default function SingleEventPage({
           marginTop: 10,
         }}
       >
-        <Text style={{ fontSize: 20 }}>{article.username}</Text>
-        <Text style={{ fontSize: 20 }}>{article.location}</Text>
-        <Text style={{ fontSize: 20 }}>
+        <Text style={{ fontSize: 20 }}>{article.username.slice(0, 10)}</Text>
+        <Text style={{ fontSize: 16 }}>{article.location}</Text>
+        <Text style={{ fontSize: 16 }}>
           Attending:{article.attending?.length + "/" + article.size_limit}
         </Text>
       </View>
@@ -176,25 +182,57 @@ export default function SingleEventPage({
         }}
       >
         <View>
-          <FlatList data={article.topics} renderItem={renderTopics} />
-          <Pressable
+          {/* <FlatList
+            data={article.topics}
+            renderItem={renderTopics}
+            horizontal={true}
+          /> */}
+          <View
             style={{
-              alignSelf: "center",
-              borderColor: "#8cb3d9",
-              backgroundColor: "#8cb3d9",
-              paddingHorizontal: 10,
-              paddingVertical: 9,
-              borderRadius: 2,
-              borderWidth: 0.5,
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+              marginBottom: 10,
             }}
           >
-            <Text>Attend Event</Text>
-          </Pressable>
-        </View>
-        <View style={{ maxWidth: 200 }}>
-          <Text style={{ fontSize: 16 }}>{article.description}</Text>
+            {article.topics.map((topic) => {
+              return (
+                <Text
+                  style={{
+                    marginRight: 100,
+                    fontSize: 18,
+                    color: "grey",
+                    marginTop: 2,
+                    minWidth: "15%",
+                  }}
+                  key={topic}
+                >
+                  {topic}
+                </Text>
+              );
+            })}
+          </View>
         </View>
       </View>
+      <View style={{ width: "99%", alignSelf: "center", marginBottom: 10 }}>
+        <Text style={{ fontSize: 18, textAlign: "left" }}>
+          {article.description}
+        </Text>
+      </View>
+      <Pressable
+        style={{
+          alignSelf: "center",
+          borderColor: "#8cb3d9",
+          backgroundColor: "#8cb3d9",
+          paddingHorizontal: 10,
+          paddingVertical: 9,
+          borderRadius: 2,
+          borderWidth: 0.5,
+        }}
+      >
+        <Text>Attend Event</Text>
+      </Pressable>
     </View>
   );
 }
