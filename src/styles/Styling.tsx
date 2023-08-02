@@ -45,6 +45,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
   row_space_around: {
+    flexDirection: "row",
     justifyContent: "space-around",
   },
   row_space_between: {
