@@ -133,9 +133,16 @@ export default function SingleEventPage({
   };
 
   return (
-    <View style={{ padding: 5 }}>
-      <View style={styles.row_space_around}>
-        <Text>{article.title}</Text>
+    <View style={{ padding: 5, paddingHorizontal: 10 }}>
+      <View
+        style={{
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          flexDirection: "row",
+          marginBottom: 2,
+        }}
+      >
+        <Text style={{ fontSize: 20 }}>{article.title}</Text>
         <Text>{article.date}</Text>
       </View>
       <View>
@@ -144,23 +151,30 @@ export default function SingleEventPage({
           style={{ height: 200 }}
         />
       </View>
-      <View style={styles.row_space_around}>
+      <View style={{ ...styles.row_space_between, flexDirection: "row" }}>
         <Text>{article.username}</Text>
         <Text>{article.location}</Text>
         <Text>
           Attending:{article.attending?.length + "/" + article.size_limit}
         </Text>
       </View>
-      <View style={{ flexDirection: "row", borderWidth: 1, marginTop: 10 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          borderWidth: 1,
+          borderColor: "grey",
+          marginTop: 10,
+          width: 500,
+        }}
+      >
         <View>
           <FlatList data={article.topics} renderItem={renderTopics} />
           <Pressable style={{ borderWidth: 2 }}>
             <Text>Attend Event</Text>
           </Pressable>
         </View>
-        <View>
-          <Text>{article.description}</Text>
-        </View>
+        <Text>{article.description}</Text>
+        <View style={{}}></View>
       </View>
     </View>
   );
