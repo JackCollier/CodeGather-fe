@@ -131,9 +131,13 @@ export default function Home({ navigation }: any) {
     ]);
   }, []);
 
+  const handlerClick = (event_id: number) => {
+    navigation.navigate("SingleEventPage", { event_id });
+  };
+
   const renderHorizontalItems = ({ item }: { item: Article }) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("SingleEventPage")}>
+      <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
         <View style={homeStyles.horizontalCard}>
           <Text>{item.title}</Text>
           <Image
@@ -153,9 +157,7 @@ export default function Home({ navigation }: any) {
   const renderVerticalItems = ({ item }: { item: Article }) => {
     return (
       <View style={homeStyles.verticalCard}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SingleEventPage")}
-        >
+        <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
           <View style={homeStyles.bigImgContainer}>
             <Image
               source={{ uri: item.event_img_url }}
@@ -164,9 +166,7 @@ export default function Home({ navigation }: any) {
           </View>
         </TouchableOpacity>
         <View style={{ gap: 4 }}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SingleEventPage")}
-          >
+          <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
             <Text style={{ fontSize: 20, maxWidth: 200 }}>{item.title}</Text>
           </TouchableOpacity>
           <View style={{ ...styles.row_space_between, maxWidth: 185 }}>
@@ -178,9 +178,7 @@ export default function Home({ navigation }: any) {
               <Text style={{}}>{item.topics[0] + " " + item.topics[1]}</Text>
             </View>
           </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SingleEventPage")}
-          >
+          <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
             <Text style={{ maxWidth: 200 }}>
               {item.description.slice(0, 60) + "..."}
             </Text>
