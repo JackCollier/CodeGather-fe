@@ -5,6 +5,7 @@ import Welcome from "../screens/welcome/Welcome";
 import SignIn from "../screens/welcome/SignIn";
 import SignUp from "../screens/welcome/SignUp";
 import Home from "../screens/home/Home";
+import SingleEventPage from "../screens/home/SingleEventPage";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -32,6 +33,14 @@ export default function Navigation() {
           component={Tab}
           options={{
             headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="SingleEventPage"
+          component={SingleEventPage}
+          options={{
+            title: "Event",
           }}
         />
 
