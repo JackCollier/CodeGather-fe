@@ -157,7 +157,7 @@ export default function Home() {
           />
         </View>
         <View style={{ gap: 4 }}>
-          <Text style={{ fontSize: 20 }}>{item.title}</Text>
+          <Text style={{ fontSize: 20, maxWidth: 200 }}>{item.title}</Text>
           <View style={{ ...styles.row_space_between, maxWidth: 185 }}>
             <Text>{item.date}</Text>
             <Text>{item.location}</Text>
@@ -167,7 +167,9 @@ export default function Home() {
               <Text style={{}}>{item.topics[0] + " " + item.topics[1]}</Text>
             </View>
           </View>
-          <Text>{item.description.slice(0, 60) + "..."}</Text>
+          <Text style={{ maxWidth: 200 }}>
+            {item.description.slice(0, 60) + "..."}
+          </Text>
           <Text>Attending: {item.attending.length}</Text>
         </View>
       </View>
@@ -206,8 +208,6 @@ export default function Home() {
 const homeStyles = StyleSheet.create({
   nav_container: {
     flex: 0.1,
-    borderColor: "orange",
-    borderWidth: 2,
     minWidth: "100%",
     flexDirection: "row",
     alignItems: "center",
@@ -215,21 +215,20 @@ const homeStyles = StyleSheet.create({
   },
   horizontal_list_container: {
     flex: 0.35,
-    borderColor: "orange",
-    borderWidth: 2,
+    padding: 2,
   },
   vertical_list_container: {
     flex: 1,
-    borderColor: "orange",
-    borderWidth: 2,
+    padding: 2,
   },
   horizontalCard: {
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: "#8cb3d9",
     padding: 3,
     alignItems: "center",
     margin: 2,
     minWidth: 200,
+    borderRadius: 2,
   },
   smallImg: {
     width: "80%",
@@ -239,9 +238,12 @@ const homeStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    height: 240,
+    height: 220,
     paddingVertical: 10,
-    maxWidth: Dimensions.get("window").width / 2,
+    maxWidth: 385,
+    paddingHorizontal: 2,
+    borderBottomWidth: 1,
+    borderColor: "#8cb3d9",
   },
   bigImgContainer: {
     width: 160,
