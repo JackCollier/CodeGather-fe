@@ -29,22 +29,6 @@ export default function Navigation() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Tab"
-          component={Tab}
-          options={{
-            headerShown: false,
-          }}
-        />
-
-        <Stack.Screen
-          name="SingleEventPage"
-          component={SingleEventPage}
-          options={{
-            title: "Event",
-          }}
-        />
-
-        <Stack.Screen
           name="Welcome"
           component={Welcome}
           options={{
@@ -60,6 +44,20 @@ export default function Navigation() {
           name="Signup"
           component={SignUp}
           options={{ title: "Sign up" }}
+        />
+        <Stack.Screen
+          name="Tab"
+          component={Tab}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="SingleEventPage"
+          component={SingleEventPage}
+          options={{
+            title: "Event",
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
