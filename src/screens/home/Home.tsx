@@ -158,21 +158,16 @@ export default function Home() {
         </View>
         <View style={{ gap: 4 }}>
           <Text style={{ fontSize: 20 }}>{item.title}</Text>
-          <View style={styles.row_space_between}>
+          <View style={{ ...styles.row_space_between, maxWidth: 185 }}>
             <Text>{item.date}</Text>
             <Text>{item.location}</Text>
           </View>
           <View style={styles.row_flex_start}>
-            <View style={{ width: 100 }}>
-              <Text style={{}}>{item.topics[0]}</Text>
-              <Text style={{}}>{item.topics[1]}</Text>
-            </View>
-            <View style={{ width: 100 }}>
-              <Text style={{}}>{item.topics[2]}</Text>
-              <Text style={{}}>{item.topics[3]}</Text>
+            <View style={{ width: 180 }}>
+              <Text style={{}}>{item.topics[0] + " " + item.topics[1]}</Text>
             </View>
           </View>
-          <Text>{item.description.slice(0, 70) + "..."}</Text>
+          <Text>{item.description.slice(0, 60) + "..."}</Text>
           <Text>Attending: {item.attending.length}</Text>
         </View>
       </View>
@@ -253,6 +248,7 @@ const homeStyles = StyleSheet.create({
     height: "100%",
     borderWidth: 1,
     marginRight: 20,
+    borderRadius: 2,
   },
   bigImg: {
     width: "100%",
