@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image, FlatList, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "../../styles/Styling";
 
@@ -19,17 +19,17 @@ export default function SingleEventPage({
     description: string;
     topics: string[];
     attending: Profile[];
+    size_limit: number;
   };
 
   type Profile = {
     userName: string;
   };
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [article, setArticle] = useState<Article | {}>({});
+  const [article, setArticle] = useState<Article>({});
   const eventParam = route.params;
 
   useEffect(() => {
-    setArticles([
+    const articles = [
       {
         event_id: 1,
         title: "React Study Group",
@@ -37,11 +37,12 @@ export default function SingleEventPage({
         event_img_url:
           "https://solguruz.com/wp-content/uploads/2022/09/ReactJS-Framework-Benefits.png",
         location: "Manchester",
-        date: "26/09/2023",
+        date: "26/09/2023|4:00pm-6:00pm",
         description:
           "Join our React Study Group to learn and discuss React concepts and best practices.",
         topics: ["React", "Frontend", "Web Development"],
         attending: [{ userName: "ben" }],
+        size_limit: 6,
       },
       {
         event_id: 2,
@@ -59,6 +60,7 @@ export default function SingleEventPage({
           { userName: "bob" },
           { userName: "charlie" },
         ],
+        size_limit: 6,
       },
       {
         event_id: 3,
@@ -77,6 +79,8 @@ export default function SingleEventPage({
           { userName: "frank" },
           { userName: "grace" },
         ],
+
+        size_limit: 6,
       },
       {
         event_id: 4,
@@ -95,6 +99,7 @@ export default function SingleEventPage({
           { userName: "jack" },
           { userName: "kate" },
         ],
+        size_limit: 6,
       },
       {
         event_id: 5,
@@ -114,32 +119,48 @@ export default function SingleEventPage({
           { userName: "oliver" },
           { userName: "penny" },
         ],
+        size_limit: 6,
       },
-    ]);
-    const articleById = articles.find(
+    ];
+    const articleById: any = articles.find(
       (article) => article.event_id === eventParam.event_id
     );
     setArticle(articleById);
-    // console.log(articleById);
   }, []);
 
-  useEffect(() => {
-    console.log(article);
-  }, []);
+  const renderTopics = ({ item }: { item: string[] }) => {
+    return <Text>{item}</Text>;
+  };
 
   return (
-    <View>
+    <View style={{ padding: 5 }}>
+      <View style={styles.row_space_around}>
+        <Text>{article.title}</Text>
+        <Text>{article.date}</Text>
+      </View>
       <View>
+        <Image
+          source={{ uri: article.event_img_url }}
+          style={{ height: 200 }}
+        />
+      </View>
+      <View style={styles.row_space_around}>
+        <Text>{article.username}</Text>
+        <Text>{article.location}</Text>
+        <Text>
+          Attending:{article.attending?.length + "/" + article.size_limit}
+        </Text>
+      </View>
+      <View style={{ flexDirection: "row", borderWidth: 1, marginTop: 10 }}>
         <View>
-          <Text>{article?.title}</Text>
-          <Text>{article?.date}</Text>
+          <FlatList data={article.topics} renderItem={renderTopics} />
+          <Pressable style={{ borderWidth: 2 }}>
+            <Text>Attend Event</Text>
+          </Pressable>
         </View>
-        <View></View>
-        <View></View>
-
-        <View></View>
-        <View></View>
-        <View></View>
+        <View>
+          <Text>{article.description}</Text>
+        </View>
       </View>
     </View>
   );
