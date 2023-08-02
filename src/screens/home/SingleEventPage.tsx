@@ -1,3 +1,10 @@
+import { View, Text } from "react-native";
+import React from "react";
+
 export default function SingleEventPage() {
-  return <div>SingleEventPage</div>;
+  return (
+    <View>
+      <Text>SingleEventPage</Text>
+    </View>
+  );
 }
