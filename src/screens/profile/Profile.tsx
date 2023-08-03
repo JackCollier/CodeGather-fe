@@ -96,14 +96,12 @@ function Profile() {
 
           <View style={profileStyles.bottomOfProfile}>
             <View style={{ marginRight: 30 }}>
-              <Text style={{ fontSize: 16, fontWeight: 500 }}>
-                Programming languages
-              </Text>
+              <Text style={{ fontSize: 16 }}>Programming languages</Text>
               <FlatList data={userData.codding_lang} renderItem={renderLangs} />
             </View>
 
             <View>
-              <Text style={{ fontSize: 16, fontWeight: 500 }}>Interests</Text>
+              <Text style={{ fontSize: 16 }}>Interests</Text>
               <FlatList data={userData.interests} renderItem={renderLangs} />
             </View>
           </View>
