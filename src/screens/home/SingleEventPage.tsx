@@ -119,22 +119,8 @@ export default function SingleEventPage({ route }: { route: any }) {
   };
 
   return (
-    <View
-      style={{
-        padding: 5,
-        paddingHorizontal: 10,
-        justifyContent: "center",
-      }}
-    >
-      <View
-        style={{
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          flexDirection: "row",
-          borderWidth: 1,
-          marginBottom: 2,
-        }}
-      >
+    <View style={SingleEventStyles.event_container}>
+      <View style={SingleEventStyles.event_header}>
         <Text style={{ fontSize: 20 }}>{article.title}</Text>
         <Text>{article.date}</Text>
       </View>
@@ -157,53 +143,59 @@ export default function SingleEventPage({ route }: { route: any }) {
           Attending:{article.attending?.length + "/" + article.size_limit}
         </Text>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          borderColor: "grey",
-          marginTop: 10,
-          width: "100%",
-          justifyContent: "space-between",
-          padding: 2,
-        }}
-      >
+      <View style={SingleEventStyles.topics_container}>
         <View>
           <FlatList
             data={article.topics}
             renderItem={renderTopics}
             horizontal={true}
           />
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              marginBottom: 10,
-            }}
-          ></View>
         </View>
       </View>
-      <View style={{ width: "99%", alignSelf: "center", marginBottom: 10 }}>
+      <View style={SingleEventStyles.description_container}>
         <Text style={{ fontSize: 18, textAlign: "left" }}>
           {article.description}
         </Text>
       </View>
-      <Pressable
-        style={{
-          alignSelf: "center",
-          borderColor: "#8cb3d9",
-          backgroundColor: "#8cb3d9",
-          paddingHorizontal: 10,
-          paddingVertical: 9,
-          borderRadius: 2,
-          borderWidth: 0.5,
-        }}
-      >
+      <Pressable style={SingleEventStyles.attend_event_btn}>
         <Text>Attend Event</Text>
       </Pressable>
     </View>
   );
 }
 
-const SingleEventStyles = StyleSheet.create({});
+const SingleEventStyles = StyleSheet.create({
+  event_container: {
+    padding: 5,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+  },
+  event_header: {
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    flexDirection: "row",
+    borderWidth: 1,
+    marginBottom: 2,
+  },
+  topics_container: {
+    flexDirection: "row",
+    marginTop: 10,
+    width: "100%",
+    justifyContent: "space-between",
+    padding: 2,
+  },
+  description_container: {
+    width: "99%",
+    alignSelf: "center",
+    marginBottom: 10,
+  },
+  attend_event_btn: {
+    alignSelf: "center",
+    borderColor: "#8cb3d9",
+    backgroundColor: "#8cb3d9",
+    paddingHorizontal: 10,
+    paddingVertical: 9,
+    borderRadius: 2,
+    borderWidth: 0.5,
+  },
+});
