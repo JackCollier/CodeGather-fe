@@ -1,4 +1,10 @@
-import { View, StyleSheet, TextInput, FlatList } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faMapLocationDot, faFilter } from "@fortawesome/free-solid-svg-icons";
@@ -115,7 +121,13 @@ export default function Home({ navigation }: any) {
     <SafeAreaView style={styles.outerContainer}>
       <View>
         <View style={homeStyles.nav_container}>
-          <FontAwesomeIcon icon={faMapLocationDot} size={35} />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Location");
+            }}
+          >
+            <FontAwesomeIcon icon={faMapLocationDot} size={35} />
+          </TouchableOpacity>
           <TextInput style={styles.text_input} placeholder="Search" />
           <FontAwesomeIcon icon={faFilter} size={35} />
         </View>
