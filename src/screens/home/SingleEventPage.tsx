@@ -165,7 +165,7 @@ export default function SingleEventPage({
           marginTop: 10,
         }}
       >
-        <Text style={{ fontSize: 20 }}>{article.username.slice(0, 10)}</Text>
+        <Text style={{ fontSize: 20 }}>{article.username}</Text>
         <Text style={{ fontSize: 16 }}>{article.location}</Text>
         <Text style={{ fontSize: 16 }}>
           Attending:{article.attending?.length + "/" + article.size_limit}
@@ -182,11 +182,11 @@ export default function SingleEventPage({
         }}
       >
         <View>
-          {/* <FlatList
+          <FlatList
             data={article.topics}
             renderItem={renderTopics}
             horizontal={true}
-          /> */}
+          />
           <View
             style={{
               flexDirection: "row",
@@ -195,24 +195,7 @@ export default function SingleEventPage({
               alignItems: "flex-start",
               marginBottom: 10,
             }}
-          >
-            {article.topics.map((topic) => {
-              return (
-                <Text
-                  style={{
-                    marginRight: 100,
-                    fontSize: 18,
-                    color: "grey",
-                    marginTop: 2,
-                    minWidth: "15%",
-                  }}
-                  key={topic}
-                >
-                  {topic}
-                </Text>
-              );
-            })}
-          </View>
+          ></View>
         </View>
       </View>
       <View style={{ width: "99%", alignSelf: "center", marginBottom: 10 }}>
