@@ -3,16 +3,16 @@ import { styles } from "../styles/Styling";
 import { homeStyles } from "../screens/home/Home";
 
 export type Article = {
-  event_id: number;
-  title: string;
-  username: string;
-  event_img_url: string;
-  location: string;
-  date: string;
-  description: string;
-  topics: string[];
-  attending: Profile[];
-  size_limit: number;
+  event_id?: number;
+  title?: string;
+  username?: string;
+  event_img_url?: string;
+  location?: string;
+  date?: string;
+  description?: string;
+  topics?: ArrayLike<string[]>;
+  attending?: Profile[];
+  size_limit?: number;
 };
 
 export type Profile = {
