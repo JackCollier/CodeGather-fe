@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faMapLocationDot, faFilter } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { styles } from "../../styles/Styling";
 import { useState, useEffect } from "react";
 import {
@@ -38,13 +39,30 @@ export default function Home({ navigation }: any) {
               navigation.navigate("Location");
             }}
           >
-            <FontAwesomeIcon icon={faMapLocationDot} size={35} />
+            <FontAwesomeIcon
+              icon={faMapLocationDot}
+              color="#3c8eba"
+              size={32}
+            />
           </TouchableOpacity>
           <TextInput style={styles.text_input} placeholder="Search" />
-          <FontAwesomeIcon icon={faFilter} size={35} />
+          <TouchableOpacity>
+            <MaterialCommunityIcons
+              name="filter-menu"
+              size={32}
+              color="#3c8eba"
+            />
+          </TouchableOpacity>
         </View>
         <View style={homeStyles.horizontal_list_container}>
-          <Text>Popular Events</Text>
+          <Text
+            style={{
+              backgroundColor: "#cacfcc",
+              padding: 6,
+            }}
+          >
+            Popular Events
+          </Text>
           <FlatList
             data={articles}
             renderItem={({ item }) =>
@@ -55,7 +73,14 @@ export default function Home({ navigation }: any) {
           ></FlatList>
         </View>
         <View style={homeStyles.vertical_list_container}>
-          <Text>Events Near You</Text>
+          <Text
+            style={{
+              backgroundColor: "#cacfcc",
+              padding: 6,
+            }}
+          >
+            Events Near You
+          </Text>
           <FlatList
             data={articles}
             renderItem={({ item }) => renderVerticalItems({ item, navigation })}
