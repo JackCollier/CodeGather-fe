@@ -50,8 +50,6 @@ export default function Map() {
     });
   };
 
-  console.log(longAndLat);
-
   useEffect(() => {
     getCityData().then((res) => {
       const formattedCities = res.results.map(
@@ -89,7 +87,7 @@ export default function Map() {
           scrollEnabled={true}
           region={longAndLat}
         >
-          {/* {eventRegions.map(({ latitude, longitude, color = "red", name }) => {
+          {eventRegions.map(({ latitude, longitude, color = "red", name }) => {
             return (
               <Marker
                 key={latitude}
@@ -100,7 +98,7 @@ export default function Map() {
                 <FontAwesome name="map-pin" size={43} color={color} />
               </Marker>
             );
-          })} */}
+          })}
         </MapView>
       </View>
     </SafeAreaView>
