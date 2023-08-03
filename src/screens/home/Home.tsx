@@ -1,49 +1,19 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Image,
-  FlatList,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, TextInput, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {
-  faMapLocationDot,
-  faFilter,
-  faUser,
-  faHome,
-  faTicket,
-  faSquarePlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMapLocationDot, faFilter } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { styles } from "../../styles/Styling";
 import { useState, useEffect } from "react";
 import {
   renderHorizontalItems,
   renderVerticalItems,
+  Article,
+  Profile,
 } from "../../utils/RenderFunctions";
 
 export default function Home({ navigation }: any) {
   const [articles, setArticles] = useState<Article[]>([]);
-
-  type Article = {
-    event_id: number;
-    title: string;
-    username: string;
-    event_img_url: string;
-    location: string;
-    date: string;
-    description: string;
-    topics: string[];
-    attending: Profile[];
-  };
-
-  type Profile = {
-    userName: string;
-  };
 
   useEffect(() => {
     setArticles([
