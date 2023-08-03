@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { styles } from "../styles/Styling";
 import { homeStyles } from "../screens/home/Home";
 
-type Article = {
+export type Article = {
   event_id: number;
   title: string;
   username: string;
@@ -14,7 +14,7 @@ type Article = {
   attending: Profile[];
 };
 
-type Profile = {
+export type Profile = {
   userName: string;
 };
 
