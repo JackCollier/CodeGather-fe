@@ -3,12 +3,13 @@ import { styles } from "../styles/Styling";
 import { homeStyles } from "../screens/home/Home";
 
 export type Article = {
-  event_id: number;
-  title: string;
-  username: string;
-  event_img_url: string;
-  location: string;
-  date: string;
+  _id: string;
+  user_id: string;
+  event_title: string;
+  username?: string;
+  image: string;
+  location?: any;
+  date_time: string;
   description: string;
   topics: string[];
   attending: Profile[];
@@ -26,18 +27,15 @@ export const renderHorizontalItems = ({
   item: Article;
   navigation: any;
 }) => {
-  const handlerClick = (event_id: number) => {
+  const handlerClick = (event_id: string) => {
     navigation.navigate("SingleEventPage", { event_id });
   };
   return (
-    <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
+    <TouchableOpacity onPress={() => handlerClick(item._id)}>
       <View style={homeStyles.horizontalCard}>
-        <Text>{item.title}</Text>
-        <Image
-          source={{ uri: item.event_img_url }}
-          style={homeStyles.smallImg}
-        />
-        <Text>{item.date}</Text>
+        <Text>{item.event_title}</Text>
+        <Image source={{ uri: item.image }} style={homeStyles.smallImg} />
+        <Text>{item.date_time}</Text>
         <View style={{ flexDirection: "row", gap: 5 }}>
           <Text>{item.location}</Text>
           <Text>Attending: {item.attending.length}</Text>
@@ -54,25 +52,24 @@ export const renderVerticalItems = ({
   item: Article;
   navigation: any;
 }) => {
-  const handlerClick = (event_id: number) => {
+  const handlerClick = (event_id: string) => {
     navigation.navigate("SingleEventPage", { event_id });
   };
   return (
     <View style={homeStyles.verticalCard}>
-      <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
+      <TouchableOpacity onPress={() => handlerClick(item._id)}>
         <View style={homeStyles.bigImgContainer}>
-          <Image
-            source={{ uri: item.event_img_url }}
-            style={homeStyles.bigImg}
-          />
+          <Image source={{ uri: item.image }} style={homeStyles.bigImg} />
         </View>
       </TouchableOpacity>
       <View style={{ gap: 4 }}>
-        <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
-          <Text style={{ fontSize: 20, maxWidth: 200 }}>{item.title}</Text>
+        <TouchableOpacity onPress={() => handlerClick(item._id)}>
+          <Text style={{ fontSize: 20, maxWidth: 200 }}>
+            {item.event_title}
+          </Text>
         </TouchableOpacity>
         <View style={{ ...styles.row_space_between, maxWidth: 185 }}>
-          <Text>{item.date}</Text>
+          <Text>{item.date_time}</Text>
           <Text>{item.location}</Text>
         </View>
         <View style={styles.row_flex_start}>
@@ -80,7 +77,7 @@ export const renderVerticalItems = ({
             <Text style={{}}>{item.topics[0] + " " + item.topics[1]}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
+        <TouchableOpacity onPress={() => handlerClick(item._id)}>
           <Text style={{ maxWidth: 200 }}>
             {item.description.slice(0, 60) + "..."}
           </Text>
