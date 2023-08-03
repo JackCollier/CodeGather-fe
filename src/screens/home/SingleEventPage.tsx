@@ -1,30 +1,16 @@
-import { View, Text, Image, FlatList, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  Pressable,
+  StyleSheet,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { styles } from "../../styles/Styling";
+import { Article, Profile } from "../../utils/RenderFunctions";
 
-export default function SingleEventPage({
-  route,
-  navigation,
-}: {
-  route: any;
-  navigation: any;
-}) {
-  type Article = {
-    event_id: number;
-    title: string;
-    username: string;
-    event_img_url: string;
-    location: string;
-    date: string;
-    description: string;
-    topics: string[];
-    attending: Profile[];
-    size_limit: number;
-  };
-
-  type Profile = {
-    userName: string;
-  };
+export default function SingleEventPage({ route }: { route: any }) {
   const [article, setArticle] = useState<Article>({});
   const eventParam = route.params;
 
@@ -219,3 +205,5 @@ export default function SingleEventPage({
     </View>
   );
 }
+
+const SingleEventStyles = StyleSheet.create({});
