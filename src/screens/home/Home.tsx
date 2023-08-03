@@ -21,6 +21,10 @@ import {
 import React from "react";
 import { styles } from "../../styles/Styling";
 import { useState, useEffect } from "react";
+import {
+  renderHorizontalItems,
+  renderVerticalItems,
+} from "../../utils/RenderFunctions";
 
 export default function Home({ navigation }: any) {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -131,64 +135,6 @@ export default function Home({ navigation }: any) {
     ]);
   }, []);
 
-  const handlerClick = (event_id: number) => {
-    navigation.navigate("SingleEventPage", { event_id });
-  };
-
-  const renderHorizontalItems = ({ item }: { item: Article }) => {
-    return (
-      <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
-        <View style={homeStyles.horizontalCard}>
-          <Text>{item.title}</Text>
-          <Image
-            source={{ uri: item.event_img_url }}
-            style={homeStyles.smallImg}
-          />
-          <Text>{item.date}</Text>
-          <View style={{ flexDirection: "row", gap: 5 }}>
-            <Text>{item.location}</Text>
-            <Text>Attending: {item.attending.length}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  const renderVerticalItems = ({ item }: { item: Article }) => {
-    return (
-      <View style={homeStyles.verticalCard}>
-        <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
-          <View style={homeStyles.bigImgContainer}>
-            <Image
-              source={{ uri: item.event_img_url }}
-              style={homeStyles.bigImg}
-            />
-          </View>
-        </TouchableOpacity>
-        <View style={{ gap: 4 }}>
-          <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
-            <Text style={{ fontSize: 20, maxWidth: 200 }}>{item.title}</Text>
-          </TouchableOpacity>
-          <View style={{ ...styles.row_space_between, maxWidth: 185 }}>
-            <Text>{item.date}</Text>
-            <Text>{item.location}</Text>
-          </View>
-          <View style={styles.row_flex_start}>
-            <View style={{ width: 180 }}>
-              <Text style={{}}>{item.topics[0] + " " + item.topics[1]}</Text>
-            </View>
-          </View>
-          <TouchableOpacity onPress={() => handlerClick(item.event_id)}>
-            <Text style={{ maxWidth: 200 }}>
-              {item.description.slice(0, 60) + "..."}
-            </Text>
-            <Text>Attending: {item.attending.length}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
-
   return (
     <SafeAreaView style={styles.outerContainer}>
       <View>
@@ -200,7 +146,9 @@ export default function Home({ navigation }: any) {
         <View style={homeStyles.horizontal_list_container}>
           <FlatList
             data={articles}
-            renderItem={renderHorizontalItems}
+            renderItem={({ item }) =>
+              renderHorizontalItems({ item, navigation })
+            }
             keyExtractor={(item) => item.title}
             horizontal={true}
           ></FlatList>
@@ -208,7 +156,7 @@ export default function Home({ navigation }: any) {
         <View style={homeStyles.vertical_list_container}>
           <FlatList
             data={articles}
-            renderItem={renderVerticalItems}
+            renderItem={({ item }) => renderVerticalItems({ item, navigation })}
             keyExtractor={(item) => item.title}
             horizontal={false}
           />
@@ -218,7 +166,7 @@ export default function Home({ navigation }: any) {
   );
 }
 
-const homeStyles = StyleSheet.create({
+export const homeStyles = StyleSheet.create({
   nav_container: {
     flex: 0.1,
     minWidth: "100%",
