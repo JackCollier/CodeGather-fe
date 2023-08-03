@@ -29,6 +29,7 @@ export default function Home({ navigation }: any) {
           "Join our React Study Group to learn and discuss React concepts and best practices.",
         topics: ["React", "Frontend", "Web Development"],
         attending: [{ userName: "ben" }],
+        size_limit: 6,
       },
       {
         event_id: 2,
@@ -46,6 +47,7 @@ export default function Home({ navigation }: any) {
           { userName: "bob" },
           { userName: "charlie" },
         ],
+        size_limit: 6,
       },
       {
         event_id: 3,
@@ -64,6 +66,8 @@ export default function Home({ navigation }: any) {
           { userName: "frank" },
           { userName: "grace" },
         ],
+
+        size_limit: 6,
       },
       {
         event_id: 4,
@@ -82,6 +86,7 @@ export default function Home({ navigation }: any) {
           { userName: "jack" },
           { userName: "kate" },
         ],
+        size_limit: 6,
       },
       {
         event_id: 5,
@@ -101,6 +106,7 @@ export default function Home({ navigation }: any) {
           { userName: "oliver" },
           { userName: "penny" },
         ],
+        size_limit: 6,
       },
     ]);
   }, []);
