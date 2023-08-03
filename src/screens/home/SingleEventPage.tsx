@@ -13,11 +13,13 @@ import { getEventData, getEventDataById } from "../../utils/CodeGatherApi";
 
 export default function SingleEventPage({ route }: { route: any }) {
   const [article, setArticle] = useState<Article>({});
+  const [isLoading, setIsLoading] = useState(true);
   const eventParam = route.params;
 
   useEffect(() => {
     getEventDataById(eventParam.event_id).then((res) => {
       setArticle(res.event);
+      setIsLoading(false);
     });
   }, []);
 
@@ -26,45 +28,51 @@ export default function SingleEventPage({ route }: { route: any }) {
   };
 
   return (
-    <View style={SingleEventStyles.event_container}>
-      <View style={SingleEventStyles.event_header}>
-        <Text style={{ fontSize: 20 }}>{article.event_title}</Text>
-        <Text>{article.date_time}</Text>
-      </View>
-      <View>
-        <Image source={{ uri: article.image }} style={{ height: 200 }} />
-      </View>
-      <View
-        style={{
-          ...styles.row_space_between,
-          flexDirection: "row",
-          marginTop: 10,
-        }}
-      >
-        <Text style={{ fontSize: 20 }}>{article.username}</Text>
-        <Text style={{ fontSize: 16 }}>{article.location}</Text>
-        <Text style={{ fontSize: 16 }}>
-          Attending:{article.attending?.length + "/" + article.size_limit}
-        </Text>
-      </View>
-      <View style={SingleEventStyles.topics_container}>
-        <View>
-          <FlatList
-            data={article.topics}
-            renderItem={renderTopics}
-            horizontal={true}
-          />
+    <>
+      {isLoading ? (
+        <Text>...</Text>
+      ) : (
+        <View style={SingleEventStyles.event_container}>
+          <View style={SingleEventStyles.event_header}>
+            <Text style={{ fontSize: 20 }}>{article.event_title}</Text>
+            <Text>{article.date_time}</Text>
+          </View>
+          <View>
+            <Image source={{ uri: article.image }} style={{ height: 200 }} />
+          </View>
+          <View
+            style={{
+              ...styles.row_space_between,
+              flexDirection: "row",
+              marginTop: 10,
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>{article.username}</Text>
+            <Text style={{ fontSize: 16 }}>{article.location}</Text>
+            <Text style={{ fontSize: 16 }}>
+              Attending:{article.attending?.length + "/" + article.size_limit}
+            </Text>
+          </View>
+          <View style={SingleEventStyles.topics_container}>
+            <View>
+              <FlatList
+                data={article.topics}
+                renderItem={renderTopics}
+                horizontal={true}
+              />
+            </View>
+          </View>
+          <View style={SingleEventStyles.description_container}>
+            <Text style={{ fontSize: 18, textAlign: "left" }}>
+              {article.description}
+            </Text>
+          </View>
+          <Pressable style={SingleEventStyles.attend_event_btn}>
+            <Text>Attend Event</Text>
+          </Pressable>
         </View>
-      </View>
-      <View style={SingleEventStyles.description_container}>
-        <Text style={{ fontSize: 18, textAlign: "left" }}>
-          {article.description}
-        </Text>
-      </View>
-      <Pressable style={SingleEventStyles.attend_event_btn}>
-        <Text>Attend Event</Text>
-      </Pressable>
-    </View>
+      )}
+    </>
   );
 }
 
