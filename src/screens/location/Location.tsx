@@ -1,19 +1,12 @@
 import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SelectList } from "react-native-dropdown-select-list";
-
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { FontAwesome } from "@expo/vector-icons";
 import { getCityData } from "../../utils/CityApi";
 import { useEffect, useState } from "react";
 
-const manchesterRegion = {
-  latitude: 53.483959,
-  longitude: -2.244644,
-  latitudeDelta: 0.1922,
-  longitudeDelta: 0.0421,
-};
 const eventRegions = [
   {
     name: "Piccadilly Railway",
@@ -40,12 +33,35 @@ const height = Dimensions.get("window").height;
 export default function Map() {
   const [selected, setSelected] = useState("");
   const [cityList, setCityList] = useState([]);
+  const [longAndLat, setLongAndLat] = useState({
+    latitude: 53.483959,
+    longitude: -2.244644,
+    latitudeDelta: 0.1922,
+    longitudeDelta: 0.0421,
+  });
+
+  const findLongAndLat = (name: string) => {
+    const LL = cityList.find((location) => location.value === name);
+    setLongAndLat({
+      latitude: LL.latitude,
+      longitude: LL.longitude,
+      latitudeDelta: 0.1922,
+      longitudeDelta: 0.0421,
+    });
+  };
+
+  console.log(longAndLat);
 
   useEffect(() => {
     getCityData().then((res) => {
       const formattedCities = res.results.map(
-        (item: { name: string }, index: number) => {
-          return { key: index, value: item.name };
+        (item: { name: string; location: any }, index: number) => {
+          return {
+            key: index,
+            value: item.name,
+            latitude: item.location.latitude,
+            longitude: item.location.longitude,
+          };
         }
       );
       setCityList(formattedCities);
@@ -56,7 +72,10 @@ export default function Map() {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Event</Text>
       <SelectList
-        setSelected={(val: string) => setSelected(val)}
+        setSelected={(val: string) => {
+          setSelected(val);
+          findLongAndLat(val);
+        }}
         data={cityList}
         save="value"
         boxStyles={{ borderColor: "#8cb3d9" }}
@@ -66,10 +85,11 @@ export default function Map() {
       <View style={styles.map_container}>
         <MapView
           style={styles.map}
-          initialRegion={manchesterRegion}
+          initialRegion={longAndLat}
           scrollEnabled={true}
+          region={longAndLat}
         >
-          {eventRegions.map(({ latitude, longitude, color = "red", name }) => {
+          {/* {eventRegions.map(({ latitude, longitude, color = "red", name }) => {
             return (
               <Marker
                 key={latitude}
@@ -80,7 +100,7 @@ export default function Map() {
                 <FontAwesome name="map-pin" size={43} color={color} />
               </Marker>
             );
-          })}
+          })} */}
         </MapView>
       </View>
     </SafeAreaView>
