@@ -4,6 +4,7 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
+  Text,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -43,6 +44,7 @@ export default function Home({ navigation }: any) {
           <FontAwesomeIcon icon={faFilter} size={35} />
         </View>
         <View style={homeStyles.horizontal_list_container}>
+          <Text>Popular Events</Text>
           <FlatList
             data={articles}
             renderItem={({ item }) =>
@@ -53,6 +55,7 @@ export default function Home({ navigation }: any) {
           ></FlatList>
         </View>
         <View style={homeStyles.vertical_list_container}>
+          <Text>Events Near You</Text>
           <FlatList
             data={articles}
             renderItem={({ item }) => renderVerticalItems({ item, navigation })}
@@ -74,7 +77,7 @@ export const homeStyles = StyleSheet.create({
     justifyContent: "space-around",
   },
   horizontal_list_container: {
-    flex: 0.35,
+    flex: 0.4,
     padding: 2,
   },
   vertical_list_container: {
