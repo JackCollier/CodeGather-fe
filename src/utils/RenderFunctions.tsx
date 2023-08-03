@@ -12,6 +12,7 @@ export type Article = {
   description: string;
   topics: string[];
   attending: Profile[];
+  size_limit: number;
 };
 
 export type Profile = {
