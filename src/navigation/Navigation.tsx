@@ -8,6 +8,7 @@ import SignUp from "../screens/welcome/SignUp";
 import Home from "../screens/home/Home";
 import SingleEventPage from "../screens/home/SingleEventPage";
 import Profile from "../screens/profile/Profile";
+import Location from "../screens/location/Location";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -48,6 +49,13 @@ export default function Navigation() {
         <Stack.Screen
           name="SingleEventPage"
           component={SingleEventPage}
+          options={{
+            title: "Event",
+          }}
+        />
+        <Stack.Screen
+          name="Location"
+          component={Location}
           options={{
             title: "Event",
           }}
