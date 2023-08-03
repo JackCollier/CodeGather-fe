@@ -77,14 +77,21 @@ function Profile() {
                 }}
               />
               <View style={profileStyles.profileText}>
-                <Text style={{ fontSize: 30 }}>{userData.fullName}</Text>
-                <Text style={{ fontSize: 15 }}>@{userData.userName}</Text>
-                <Text>Rating: {userData.rating}</Text>
+                <Text style={profileStyles.fullname}>{userData.fullName}</Text>
+                <Text style={profileStyles.userName}>@{userData.userName}</Text>
+                <Text> Rating: {userData.rating}</Text>
                 <Text> {userData.location}</Text>
               </View>
             </View>
+
             <Text style={profileStyles.bio}>{userData.bio}</Text>
-            <FlatList data={userData.socials} renderItem={renderSocials} />
+
+            <Text style={profileStyles.social_media_title}>
+              Social Media links
+            </Text>
+            <View>
+              <FlatList data={userData.socials} renderItem={renderSocials} />
+            </View>
           </View>
 
           <View style={profileStyles.bottomOfProfile}>
@@ -148,7 +155,7 @@ const profileStyles = StyleSheet.create({
     justifyContent: "flex-start",
     alignSelf: "center",
 
-    marginTop: 8,
+    marginTop: 100,
     paddingHorizontal: 20,
     fontSize: 20,
   },
@@ -157,10 +164,22 @@ const profileStyles = StyleSheet.create({
     height: 90,
     borderRadius: 50,
   },
+  fullname: {
+    fontSize: 30,
+  },
+  userName: {
+    fontSize: 15,
+  },
   bio: {
     paddingTop: 20,
     paddingLeft: 20,
     fontSize: 15,
+  },
+  social_media_title: {
+    marginLeft: 20,
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: "bold",
   },
   links: {
     paddingLeft: 20,
