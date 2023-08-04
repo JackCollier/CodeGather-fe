@@ -10,17 +10,27 @@ import React, { useEffect, useState } from "react";
 import { styles } from "../../styles/Styling";
 import { Article, Profile } from "../../utils/RenderFunctions";
 import { getEventData, getEventDataById } from "../../utils/CodeGatherApi";
+import { convertLongAndLat } from "../../utils/CityApi";
 
 export default function SingleEventPage({ route }: { route: any }) {
   const [article, setArticle] = useState<Article>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [locationData, setLocationData] = useState();
   const eventParam = route.params;
 
   useEffect(() => {
-    getEventDataById(eventParam.event_id).then((res) => {
-      setArticle(res.event);
-      setIsLoading(false);
-    });
+    getEventDataById(eventParam.event_id)
+      .then((res) => {
+        setArticle(res.event);
+        setIsLoading(false);
+        return res.event.location;
+      })
+      .then((location) => {
+        return convertLongAndLat(location.lat, location.long);
+      })
+      .then((data) => {
+        setLocationData(data.address.city);
+      });
   }, []);
 
   const renderTopics = ({ item }: { item: string[] }) => {
@@ -48,7 +58,7 @@ export default function SingleEventPage({ route }: { route: any }) {
             }}
           >
             <Text style={{ fontSize: 20 }}>{article.username}</Text>
-            <Text style={{ fontSize: 16 }}>{article.location}</Text>
+            <Text style={{ fontSize: 16 }}>{locationData}</Text>
             <Text style={{ fontSize: 16 }}>
               Attending:{article.attending?.length + "/" + article.size_limit}
             </Text>
