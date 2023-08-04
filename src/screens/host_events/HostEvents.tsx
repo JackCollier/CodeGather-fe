@@ -6,13 +6,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function HostEvents() {
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState(new Date());
-
-  const [showDate, setShowDate] = useState(false);
-  const [showTime, setShowTime] = useState(false);
-
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [date, setDate] = useState(new Date().toLocaleDateString());
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -23,25 +19,20 @@ export default function HostEvents() {
   };
 
   const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
+    setDate(date.toLocaleDateString());
+    setTime(date.toLocaleTimeString().slice(0, -3));
     hideDatePicker();
-  };
-
-  const onChangeDate = (event: any, selectedDate: any) => {
-    const currentDate = selectedDate;
-    setShowDate(false);
-    setDate(currentDate);
-  };
-
-  const onChangeTime = (event: any, selectedDate: any) => {
-    const currentDate = selectedDate;
-    setShowTime(false);
-    setTime(currentDate);
   };
 
   return (
     <SafeAreaView style={styles.outerContainer}>
+      <Text>Host your Events</Text>
+      <Text>Event Title</Text>
+      <View>{/* <Image src={} /> */}</View>
       <Button title="Event Date and Time" onPress={showDatePicker} />
+      <Text>{date}</Text>
+      <Text>{time}</Text>
+
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         onConfirm={handleConfirm}
