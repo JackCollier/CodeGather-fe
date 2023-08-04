@@ -13,3 +13,11 @@ export const getCityData = async () => {
   const data = await response.json();
   return data;
 };
+
+export const convertLongAndLat = async (lat, long) => {
+  const response = await fetch(
+    `https://geocode.maps.co/reverse?lat=${lat}&lon=${long}`
+  );
+  const data = await response.json();
+  return data;
+};
