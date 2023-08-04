@@ -59,7 +59,7 @@ export default function HostEvents() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 90}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 120 : 90}
     >
       <ScrollView>
         <SafeAreaView
@@ -101,7 +101,7 @@ export default function HostEvents() {
               onPress={pickImage}
             >
               <Text style={{ fontSize: 16, fontWeight: "500", color: "white" }}>
-                Pick an image from camera roll
+                Upload Image
               </Text>
             </Pressable>
             {image && (
@@ -174,7 +174,11 @@ export default function HostEvents() {
           </View>
           <View style={{ width: "100%" }}>
             <Text style={{ width: "100%" }}>Size Limit</Text>
-            <TextInput keyboardType="numeric" style={{ borderWidth: 1 }} />
+            <TextInput
+              keyboardType="numeric"
+              placeholder="size limit ..."
+              style={{ borderWidth: 1, paddingLeft: 10 }}
+            />
           </View>
           <View>
             <Button title="Create Event"></Button>
