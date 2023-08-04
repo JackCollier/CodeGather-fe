@@ -6,6 +6,7 @@ import {
   Button,
   KeyboardAvoidingView,
   ScrollView,
+  StyleSheet,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -56,11 +57,18 @@ export default function HostEvents() {
   return (
     <ScrollView>
       <SafeAreaView style={styles.outerContainer}>
-        <Text>Host your Events</Text>
-        <Text>Event Title</Text>
-
+        <Text style={hostStyles.host_header}>Host your Event</Text>
+        <View>
+          <Text>Event Title</Text>
+          <TextInput style={styles.text_input}></TextInput>
+        </View>
         <View
-          style={{ flex: 0, alignItems: "center", justifyContent: "center" }}
+          style={{
+            borderWidth: 1,
+            borderColor: "#8cb3d9",
+            borderRadius: 3,
+            width: "75%",
+          }}
         >
           <Button title="Pick an image from camera roll" onPress={pickImage} />
           {image && (
@@ -70,8 +78,16 @@ export default function HostEvents() {
             />
           )}
         </View>
-
-        <Button title="Event Date and Time" onPress={showDatePicker} />
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: "#8cb3d9",
+            borderRadius: 3,
+            width: "75%",
+          }}
+        >
+          <Button title="Event Date and Time" onPress={showDatePicker} />
+        </View>
         <Text>{date}</Text>
         <Text>{time}</Text>
         <DateTimePickerModal
@@ -137,3 +153,9 @@ export default function HostEvents() {
     </ScrollView>
   );
 }
+
+const hostStyles = StyleSheet.create({
+  host_header: {
+    fontSize: 20,
+  },
+});
