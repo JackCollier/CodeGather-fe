@@ -7,6 +7,8 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
+  Pressable,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -55,102 +57,131 @@ export default function HostEvents() {
   };
 
   return (
-    <ScrollView>
-      <SafeAreaView style={styles.outerContainer}>
-        <Text style={hostStyles.host_header}>Host your Event</Text>
-        <View>
-          <Text>Event Title</Text>
-          <TextInput style={styles.text_input}></TextInput>
-        </View>
-        <View
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 90}
+    >
+      <ScrollView>
+        <SafeAreaView
           style={{
-            borderWidth: 1,
-            borderColor: "#8cb3d9",
-            borderRadius: 3,
-            width: "75%",
+            flex: 0,
+            justifyContent: "center",
+            alignItems: "center",
+            width: "80%",
+            alignSelf: "center",
+            marginTop: 20,
+            padding: 0,
+            gap: 10,
           }}
         >
-          <Button title="Pick an image from camera roll" onPress={pickImage} />
-          {image && (
-            <Image
-              source={{ uri: image }}
-              style={{ width: 340, height: 200 }}
+          <Text style={hostStyles.host_header}>Host your Event</Text>
+          <View>
+            <Text>Event Title</Text>
+            <TextInput
+              style={styles.text_input}
+              placeholder="add event title"
             />
-          )}
-        </View>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "#8cb3d9",
-            borderRadius: 3,
-            width: "75%",
-          }}
-        >
-          <Button title="Event Date and Time" onPress={showDatePicker} />
-        </View>
-        <Text>{date}</Text>
-        <Text>{time}</Text>
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-          display="inline"
-          mode="datetime"
-          isDarkModeEnabled={true}
-        />
-        <View>
-          <Text>Add you Topics</Text>
-          <TextInput
-            onChangeText={(text) => {
-              setTopic(text);
-            }}
-            style={styles.text_input}
-            placeholder={
-              !limit ? "add your topic (Limit is 4)" : "limit reached"
-            }
-          />
-          <Text>{topics}</Text>
-          <Button
-            onPress={() => {
-              if (topics.length > 3) {
-                setLimit(true);
-                return;
-              }
-              setTopics((currenTopics) => {
-                return [...currenTopics, topic];
-              });
-            }}
-            title="Add Topic"
-            disabled={limit}
-          />
-        </View>
-        <View>
-          <Text style={{ textAlign: "center" }}>Description</Text>
-          <TextInput
-            multiline
-            numberOfLines={10}
+          </View>
+          <View
             style={{
-              height: 100,
-              width: 200,
-              borderColor: "gray",
               borderWidth: 1,
-              paddingHorizontal: 8,
+              borderColor: "#8cb3d9",
+              borderRadius: 3,
+              width: "75%",
             }}
-            onChangeText={(text) => setDescription(text)}
-          ></TextInput>
-        </View>
-        <View>
-          <Text>Size Limit</Text>
-          <TextInput
-            keyboardType="numeric"
-            style={{ borderWidth: 1 }}
-          ></TextInput>
-        </View>
-        <View>
-          <Button title="Create Event"></Button>
-        </View>
-      </SafeAreaView>
-    </ScrollView>
+          >
+            <Pressable
+              style={{
+                width: "100%",
+                paddingHorizontal: 0,
+                backgroundColor: "#8cb3d9",
+                alignItems: "center",
+                paddingVertical: 5,
+              }}
+              onPress={pickImage}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "500", color: "white" }}>
+                Pick an image from camera roll
+              </Text>
+            </Pressable>
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: 340, height: 200 }}
+              />
+            )}
+          </View>
+          <View
+            style={{
+              borderWidth: 1,
+              borderColor: "#8cb3d9",
+              borderRadius: 3,
+              width: "75%",
+            }}
+          >
+            <Button title="Event Date and Time" onPress={showDatePicker} />
+          </View>
+          <Text>{date}</Text>
+          <Text>{time}</Text>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+            display="inline"
+            mode="datetime"
+            isDarkModeEnabled={true}
+          />
+          <View>
+            <Text>Add you Topics</Text>
+            <TextInput
+              onChangeText={(text) => {
+                setTopic(text);
+              }}
+              style={styles.text_input}
+              placeholder={
+                !limit ? "add your topic (Limit is 4)" : "limit reached"
+              }
+            />
+            <Text>{topics}</Text>
+            <Button
+              onPress={() => {
+                if (topics.length > 3) {
+                  setLimit(true);
+                  return;
+                }
+                setTopics((currenTopics) => {
+                  return [...currenTopics, topic];
+                });
+              }}
+              title="Add Topic"
+              disabled={limit}
+            />
+          </View>
+          <View style={{ width: "100%" }}>
+            <Text style={{ textAlign: "center" }}>Description</Text>
+            <TextInput
+              multiline
+              numberOfLines={10}
+              style={{
+                height: 100,
+                width: "100%",
+                borderColor: "gray",
+                borderWidth: 1,
+                paddingHorizontal: 8,
+              }}
+              onChangeText={(text) => setDescription(text)}
+            />
+          </View>
+          <View style={{ width: "100%" }}>
+            <Text style={{ width: "100%" }}>Size Limit</Text>
+            <TextInput keyboardType="numeric" style={{ borderWidth: 1 }} />
+          </View>
+          <View>
+            <Button title="Create Event"></Button>
+          </View>
+        </SafeAreaView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
