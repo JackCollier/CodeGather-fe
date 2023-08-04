@@ -62,19 +62,9 @@ export default function HostEvents() {
       keyboardVerticalOffset={Platform.OS === "ios" ? 120 : 90}
     >
       <ScrollView>
-        <SafeAreaView
-          style={{
-            flex: 0,
-            justifyContent: "center",
-            alignItems: "center",
-            width: "80%",
-            alignSelf: "center",
-            marginTop: 20,
-            padding: 0,
-            gap: 10,
-          }}
-        >
+        <SafeAreaView style={hostStyles.host_contaier}>
           <Text style={hostStyles.host_header}>Host your Event</Text>
+
           <View>
             <Text>Event Title</Text>
             <TextInput
@@ -82,44 +72,28 @@ export default function HostEvents() {
               placeholder="add event title"
             />
           </View>
-          <View
-            style={{
-              borderWidth: 1,
-              borderColor: "#8cb3d9",
-              borderRadius: 3,
-              width: "75%",
-            }}
-          >
-            <Pressable
-              style={{
-                width: "100%",
-                paddingHorizontal: 0,
-                backgroundColor: "#8cb3d9",
-                alignItems: "center",
-                paddingVertical: 5,
-              }}
-              onPress={pickImage}
-            >
-              <Text style={{ fontSize: 16, fontWeight: "500", color: "white" }}>
-                Upload Image
-              </Text>
+          <View style={hostStyles.image_area_container}>
+            <Pressable style={hostStyles.pressable_btn} onPress={pickImage}>
+              <Text style={hostStyles.btn_text}>Upload Image</Text>
             </Pressable>
             {image && (
-              <Image
-                source={{ uri: image }}
-                style={{ width: 340, height: 200 }}
-              />
+              <Image source={{ uri: image }} style={hostStyles.upload_image} />
             )}
           </View>
           <View
             style={{
               borderWidth: 1,
-              borderColor: "#8cb3d9",
+              borderColor: "red",
               borderRadius: 3,
               width: "75%",
             }}
           >
-            <Button title="Event Date and Time" onPress={showDatePicker} />
+            <Pressable
+              style={hostStyles.pressable_btn}
+              onPress={showDatePicker}
+            >
+              <Text style={hostStyles.btn_text}>Event Date and Time</Text>
+            </Pressable>
           </View>
           <Text>{date}</Text>
           <Text>{time}</Text>
@@ -143,7 +117,8 @@ export default function HostEvents() {
               }
             />
             <Text>{topics}</Text>
-            <Button
+
+            <Pressable
               onPress={() => {
                 if (topics.length > 3) {
                   setLimit(true);
@@ -153,22 +128,18 @@ export default function HostEvents() {
                   return [...currenTopics, topic];
                 });
               }}
-              title="Add Topic"
               disabled={limit}
-            />
+              style={hostStyles.pressable_btn}
+            >
+              <Text>Add Topic</Text>
+            </Pressable>
           </View>
           <View style={{ width: "100%" }}>
             <Text style={{ textAlign: "center" }}>Description</Text>
             <TextInput
               multiline
               numberOfLines={10}
-              style={{
-                height: 100,
-                width: "100%",
-                borderColor: "gray",
-                borderWidth: 1,
-                paddingHorizontal: 8,
-              }}
+              style={hostStyles.description_input_text}
               onChangeText={(text) => setDescription(text)}
             />
           </View>
@@ -192,5 +163,44 @@ export default function HostEvents() {
 const hostStyles = StyleSheet.create({
   host_header: {
     fontSize: 20,
+  },
+  host_contaier: {
+    flex: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "80%",
+    alignSelf: "center",
+    marginTop: 20,
+    padding: 0,
+    gap: 10,
+  },
+  image_area_container: {
+    borderWidth: 1,
+    borderColor: "red",
+    borderRadius: 3,
+    width: "75%",
+  },
+  pressable_btn: {
+    width: "100%",
+    paddingHorizontal: 0,
+    backgroundColor: "#8cb3d9",
+    alignItems: "center",
+    paddingVertical: 5,
+  },
+  btn_text: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "white",
+  },
+  upload_image: {
+    width: "100%",
+    height: 200,
+  },
+  description_input_text: {
+    height: 100,
+    width: "100%",
+    borderColor: "gray",
+    borderWidth: 1,
+    paddingHorizontal: 8,
   },
 });
