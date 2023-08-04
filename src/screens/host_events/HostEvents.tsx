@@ -4,12 +4,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "../../styles/Styling";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 import * as ImagePicker from "expo-image-picker";
 
 export default function HostEvents() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState(new Date().toLocaleDateString());
   const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [topics, setTopics] = useState([]);
+  const [topic, setTopic] = useState("");
+
+  console.log(topics);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -55,7 +60,6 @@ export default function HostEvents() {
       <Button title="Event Date and Time" onPress={showDatePicker} />
       <Text>{date}</Text>
       <Text>{time}</Text>
-
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         onConfirm={handleConfirm}
@@ -64,6 +68,24 @@ export default function HostEvents() {
         mode="datetime"
         isDarkModeEnabled={true}
       />
+      <View>
+        <Text>Add you Topics</Text>
+
+        <TextInput
+          onChange={(e) => setTopic(e.target.value)}
+          style={styles.text_input}
+          placeholder="your topic"
+        />
+
+        <Button
+          onPress={() => {
+            setTopics((currenTopics) => {
+              return [...currenTopics, topic];
+            });
+          }}
+          title="Add Topic"
+        />
+      </View>
     </SafeAreaView>
   );
 }
