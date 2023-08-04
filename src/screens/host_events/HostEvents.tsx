@@ -1,10 +1,9 @@
-import { View, Text, TextInput, Image } from "react-native";
+import { View, Text, TextInput, Image, Button } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "../../styles/Styling";
-
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function HostEvents() {
   const [date, setDate] = useState(new Date());
@@ -12,6 +11,21 @@ export default function HostEvents() {
 
   const [showDate, setShowDate] = useState(false);
   const [showTime, setShowTime] = useState(false);
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    hideDatePicker();
+  };
 
   const onChangeDate = (event: any, selectedDate: any) => {
     const currentDate = selectedDate;
@@ -27,36 +41,15 @@ export default function HostEvents() {
 
   return (
     <SafeAreaView style={styles.outerContainer}>
-      <Text>Host your event!</Text>
-      <Text>Event Title</Text>
-      <View>{/* <Image src={}/> */}</View>
-
-      <View style={{ flexDirection: "row", gap: 20 }}>
-        <Text onPress={() => setShowDate(!showDate)}>Select Date</Text>
-        <Text>{date.toLocaleDateString()}</Text>
-      </View>
-      {showDate && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode="date"
-          is24Hour={true}
-          onChange={onChangeDate}
-        />
-      )}
-      <View style={{ flexDirection: "row", gap: 20, marginTop: 20 }}>
-        <Text onPress={() => setShowTime(!showTime)}>Selet Time</Text>
-        <Text>{time.toLocaleTimeString().slice(0, -3)}</Text>
-      </View>
-      {showTime && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={time}
-          mode="time"
-          is24Hour={true}
-          onChange={onChangeTime}
-        />
-      )}
+      <Button title="Event Date and Time" onPress={showDatePicker} />
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+        display="inline"
+        mode="datetime"
+        isDarkModeEnabled={true}
+      />
     </SafeAreaView>
   );
 }
