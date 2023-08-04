@@ -15,6 +15,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { styles } from "../../styles/Styling";
 import { useState, useEffect } from "react";
 import { getEventData } from "../../utils/CodeGatherApi";
+import { convertLongAndLat } from "../../utils/CityApi";
 
 export type Article = {
   _id: string;
@@ -34,6 +35,26 @@ export type Profile = {
   userName: string;
 };
 
+const LocationText = ({ lat, long }) => {
+  const [city, setCity] = useState("");
+
+  useEffect(() => {
+    const getCityFromCoordinates = async (lat, long) => {
+      try {
+        const data = await convertLongAndLat(lat, long);
+        setCity(data.address.city);
+      } catch (error) {
+        console.error(error);
+        setCity("");
+      }
+    };
+
+    getCityFromCoordinates(lat, long);
+  }, [lat, long]);
+
+  return <Text>{city}</Text>;
+};
+
 export default function Home({ navigation }: any) {
   const [events, setEvents] = useState<Article[]>([]);
 
@@ -42,7 +63,6 @@ export default function Home({ navigation }: any) {
       setEvents(res);
     });
   }, []);
-  console.log(events);
 
   const handlerClick = (event_id: string) => {
     navigation.navigate("SingleEventPage", { event_id });
@@ -55,10 +75,8 @@ export default function Home({ navigation }: any) {
           <Text>{item.event_title}</Text>
           <Image source={{ uri: item.image }} style={homeStyles.smallImg} />
           <Text>{item.date_time}</Text>
-          <View style={{ flexDirection: "row", gap: 5 }}>
-            <Text>{"item.location"}</Text>
-            <Text>Attending: {item.attending.length}</Text>
-          </View>
+          <LocationText lat={item.location.lat} long={item.location.long} />
+          <Text>Attending: {item.attending.length}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -80,8 +98,8 @@ export default function Home({ navigation }: any) {
           </TouchableOpacity>
           <View style={{ ...styles.row_space_between, maxWidth: 185 }}>
             <Text>{item.date_time}</Text>
-            <Text>{"item.location"}</Text>
           </View>
+          <LocationText lat={item.location.lat} long={item.location.long} />
           <View style={styles.row_flex_start}>
             <View style={{ width: 180 }}>
               <Text style={{}}>{item.topics[0] + " " + item.topics[1]}</Text>
