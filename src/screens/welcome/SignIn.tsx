@@ -26,6 +26,7 @@ export default function SignIn({ navigation }: any) {
       if (res.success) {
         setError(false);
         navigation.navigate("Tab");
+        // AsyncStorage.removeItem("profileId");
         AsyncStorage.setItem(
           "profileId",
           JSON.stringify({ profile_id: res.profile_id })
