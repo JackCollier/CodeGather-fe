@@ -55,6 +55,8 @@ export default function SignIn({ navigation }: any) {
               }
               style={{ ...styles.text_input, width: 200 }}
               placeholder="Email..."
+              keyboardType="email-address"
+              autoCapitalize="none"
             />
           </View>
           <View>
@@ -69,6 +71,7 @@ export default function SignIn({ navigation }: any) {
                 });
               }}
               secureTextEntry={true}
+              autoCapitalize="none"
             />
           </View>
           {error && <Text style={{ color: "red" }}>Error Logging in</Text>}
