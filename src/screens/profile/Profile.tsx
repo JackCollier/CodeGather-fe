@@ -11,39 +11,26 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCode, faBug } from "@fortawesome/free-solid-svg-icons";
 import { styles } from "../../styles/Styling";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import MyContext from "../../contexts/Context";
 
 function Profile() {
-  const testVariable = useContext(MyContext);
-  console.log(testVariable);
+  const [profile, setProfile] = useState();
 
-  interface profile {
-    avatar: string;
-    fullName: string;
-    userName: string;
-    rating: number;
-    preferences: [];
-    bio: string;
-    socials: [];
-  }
+  useEffect(() => {
+    const profileData = useContext(MyContext);
+    setProfile(profileData);
+  }, []);
 
-  const userData = {
-    fullName: "Jack Collier",
-    userName: "IknowREGEX",
-    avatar: "https://avatars.githubusercontent.com/u/121406496?v=4",
-    location: "Manchester",
-    date_of_birth: "02/02/23",
-    codding_lang: ["Javascript", "Python"],
-    interests: ["robotic", "codding", "footi"],
-    rating: 5,
-    bio: "Junior Developer, Currently studying Full Stack developement through Northcoders. React React React",
-    socials: [
-      "https://github.com/JackCollier",
-      "https://www.codewars.com/users/ackC",
-      "https://www.linkedin.com/in/",
-    ],
-  };
+  // interface profile {
+  //   avatar: string;
+  //   fullName: string;
+  //   userName: string;
+  //   rating: number;
+  //   preferences: [];
+  //   bio: string;
+  //   socials: [];
+  // }
 
   const renderSocials = ({ item }: { item: any }) => {
     const handleLinkPress = async () => {
@@ -76,39 +63,44 @@ function Profile() {
         <View style={profileStyles.profileContainer}>
           <View style={profileStyles.topOfProfile}>
             <View style={profileStyles.row}>
-              <Image
+              {/* <Image
                 style={profileStyles.avatar}
                 source={{
                   uri: userData.avatar,
                 }}
-              />
+              /> */}
               <View style={profileStyles.profileText}>
-                <Text style={profileStyles.fullname}>{userData.fullName}</Text>
-                <Text style={profileStyles.userName}>@{userData.userName}</Text>
-                <Text> Rating: {userData.rating}</Text>
-                <Text> {userData.location}</Text>
+                <Text style={profileStyles.fullname}>
+                  {profile.first_name + profile.last_name}
+                </Text>
+                <Text style={profileStyles.userName}>@{profile.username}</Text>
+                <Text> Rating: {profile.host_rating}</Text>
+                <Text> {profile.location}</Text>
               </View>
             </View>
 
-            <Text style={profileStyles.bio}>{userData.bio}</Text>
+            <Text style={profileStyles.bio}>{profile.bio}</Text>
 
             <Text style={profileStyles.social_media_title}>
               Social Media links
             </Text>
             <View>
-              <FlatList data={userData.socials} renderItem={renderSocials} />
+              {/* <FlatList data={profile.socials} renderItem={renderSocials} /> */}
             </View>
           </View>
 
           <View style={profileStyles.bottomOfProfile}>
             <View style={{ marginRight: 30 }}>
               <Text style={{ fontSize: 16 }}>Programming languages</Text>
-              <FlatList data={userData.codding_lang} renderItem={renderLangs} />
+              <FlatList
+                data={profile.coding_languages}
+                renderItem={renderLangs}
+              />
             </View>
 
             <View>
               <Text style={{ fontSize: 16 }}>Interests</Text>
-              <FlatList data={userData.interests} renderItem={renderLangs} />
+              {/* <FlatList data={userData.interests} renderItem={renderLangs} /> */}
             </View>
           </View>
         </View>
