@@ -17,10 +17,17 @@ import { useEffect, useState } from "react";
 import { getCityData } from "../../utils/CityApi";
 import { postSingup } from "../../utils/CodeGatherApi";
 import Navigation from "../../navigation/Navigation";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function SignUp({ navigation }: { navigation: any }) {
   const [selected, setSelected] = useState("");
   const [cityList, setCityList] = useState([]);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [date, setDate] = useState(new Date().toLocaleDateString());
+  const [error, setError] = useState({
+    boolean: false,
+    message: "",
+  });
   const [signUpDetail, setSignUpDetail] = useState({
     email: "",
     password: "",
@@ -29,8 +36,6 @@ export default function SignUp({ navigation }: { navigation: any }) {
     username: "",
     date_of_birth: "",
     location: "",
-    avatar: "",
-    bio: "",
   });
 
   useEffect(() => {
@@ -46,11 +51,31 @@ export default function SignUp({ navigation }: { navigation: any }) {
 
   const handleSingUp = () => {
     postSingup(signUpDetail).then((data) => {
-      console.log("--------------", data);
-      console.log(signUpDetail);
-
-      // navigation.navigate("Signin")
+      if (data.success) {
+        navigation.navigate("Signin");
+      } else {
+        setError((current) => {
+          return { ...current, boolean: true, message: data.msg };
+        });
+      }
     });
+  };
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date: any) => {
+    const formattedDate = date.toISOString().split("T")[0];
+    setDate(formattedDate);
+    setSignUpDetail((currentDetail) => {
+      return { ...currentDetail, date_of_birth: formattedDate };
+    });
+    hideDatePicker();
   };
 
   return (
@@ -101,9 +126,26 @@ export default function SignUp({ navigation }: { navigation: any }) {
                   }}
                 />
               </View>
-              <View
-                style={{ ...styles.row_space_around, alignItems: "center" }}
-              ></View>
+              <View style={{ flexDirection: "row", gap: 10 }}>
+                <Pressable style={styles.btn} onPress={showDatePicker}>
+                  <Text style={{ fontSize: 13 }}>Date of Birth:</Text>
+                </Pressable>
+                <Text
+                  style={{
+                    alignSelf: "center",
+                  }}
+                >
+                  {date}
+                </Text>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
+                  display="inline"
+                  mode="date"
+                  isDarkModeEnabled={true}
+                />
+              </View>
             </View>
             {/* */}
             <View>
@@ -153,6 +195,7 @@ export default function SignUp({ navigation }: { navigation: any }) {
             >
               <Text style={styles.btn_text}>Sign up</Text>
             </Pressable>
+            {error.boolean && <Text>{error.message}</Text>}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
