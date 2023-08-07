@@ -9,8 +9,14 @@ import {
   Platform,
 } from "react-native";
 import { styles } from "../../styles/Styling";
+import { useState } from "react";
 
 export default function SignIn({ navigation }: any) {
+  const [signInDetails, setSignInDetails] = useState({
+    email: "",
+    password: "",
+  });
+
   return (
     <SafeAreaView
       style={{
@@ -25,11 +31,27 @@ export default function SignIn({ navigation }: any) {
         <View style={styles.form}>
           <View>
             <Text style={{ ...styles.text_input_label }}>Email</Text>
-            <TextInput style={styles.text_input} placeholder="Email..." />
+            <TextInput
+              onChangeText={(text) =>
+                setSignInDetails((currentValue) => {
+                  return { ...currentValue, email: text };
+                })
+              }
+              style={styles.text_input}
+              placeholder="Email..."
+            />
           </View>
           <View>
             <Text style={{ ...styles.text_input_label }}>Password</Text>
-            <TextInput style={styles.text_input} placeholder="Password..." />
+            <TextInput
+              style={styles.text_input}
+              placeholder="Password..."
+              onChangeText={(text) =>
+                setSignInDetails((currentValue) => {
+                  return { ...currentValue, password: text };
+                })
+              }
+            />
           </View>
           <Pressable
             style={styles.btn}
