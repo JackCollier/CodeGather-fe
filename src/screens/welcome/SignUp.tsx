@@ -15,11 +15,23 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { styles } from "../../styles/Styling";
 import { useEffect, useState } from "react";
 import { getCityData } from "../../utils/CityApi";
+import { postSingup } from "../../utils/CodeGatherApi";
 import Navigation from "../../navigation/Navigation";
 
 export default function SignUp({ navigation }: { navigation: any }) {
   const [selected, setSelected] = useState("");
   const [cityList, setCityList] = useState([]);
+  const [signUpDetail, setSignUpDetail] = useState({
+    email: "",
+    password: "",
+    first_name: "",
+    last_name: "",
+    username: "",
+    date_of_birth: "",
+    location: "",
+    avatar: "",
+    bio: "",
+  });
 
   useEffect(() => {
     getCityData().then((res) => {
@@ -31,6 +43,15 @@ export default function SignUp({ navigation }: { navigation: any }) {
       setCityList(formattedCities);
     });
   }, []);
+
+  const handleSingUp = () => {
+    postSingup(signUpDetail).then((data) => {
+      console.log("--------------", data);
+      console.log(signUpDetail);
+
+      // navigation.navigate("Signin")
+    });
+  };
 
   return (
     <SafeAreaView
@@ -52,17 +73,32 @@ export default function SignUp({ navigation }: { navigation: any }) {
                 <TextInput
                   style={{ ...styles.text_input, minWidth: "50%" }}
                   placeholder="Firstname..."
+                  onChangeText={(text) => {
+                    setSignUpDetail((currentDetail) => {
+                      return { ...currentDetail, first_name: text };
+                    });
+                  }}
                 />
 
                 <TextInput
                   style={{ ...styles.text_input, minWidth: "50%" }}
                   placeholder="Lastname..."
+                  onChangeText={(text) => {
+                    setSignUpDetail((currentDetail) => {
+                      return { ...currentDetail, last_name: text };
+                    });
+                  }}
                 />
               </View>
               <View>
                 <TextInput
                   style={styles.text_input}
                   placeholder="Username..."
+                  onChangeText={(text) => {
+                    setSignUpDetail((currentDetail) => {
+                      return { ...currentDetail, username: text };
+                    });
+                  }}
                 />
               </View>
               <View
@@ -74,13 +110,34 @@ export default function SignUp({ navigation }: { navigation: any }) {
               <Text style={{ ...styles.text_input_label }}>
                 Create Your Email and password
               </Text>
-              <TextInput style={styles.text_input} placeholder="Email..." />
-              <TextInput style={styles.text_input} placeholder="Password..." />
+              <TextInput
+                style={styles.text_input}
+                placeholder="Email..."
+                onChangeText={(text) => {
+                  setSignUpDetail((currentDetail) => {
+                    return { ...currentDetail, email: text };
+                  });
+                }}
+              />
+              <TextInput
+                style={styles.text_input}
+                placeholder="Password..."
+                onChangeText={(text) => {
+                  setSignUpDetail((currentDetail) => {
+                    return { ...currentDetail, password: text };
+                  });
+                }}
+              />
             </View>
             <View>
               <Text style={{ ...styles.text_input_label }}>Your Location</Text>
               <SelectList
-                setSelected={(val: string) => setSelected(val)}
+                setSelected={(val: string) => {
+                  setSelected(val);
+                  setSignUpDetail((currentDetail) => {
+                    return { ...currentDetail, location: val };
+                  });
+                }}
                 data={cityList}
                 save="value"
                 boxStyles={{ borderColor: "#8cb3d9" }}
@@ -90,7 +147,9 @@ export default function SignUp({ navigation }: { navigation: any }) {
             </View>
             <Pressable
               style={styles.btn}
-              onPress={() => navigation.navigate("Signin")}
+              onPress={() => {
+                handleSingUp();
+              }}
             >
               <Text style={styles.btn_text}>Sign up</Text>
             </Pressable>
