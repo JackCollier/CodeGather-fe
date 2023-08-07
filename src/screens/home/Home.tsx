@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -117,63 +118,73 @@ export default function Home({ navigation }: any) {
   };
 
   return (
-    <SafeAreaView style={styles.outerContainer}>
-      <View>
-        <View style={homeStyles.nav_container}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Location");
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faMapLocationDot}
-              color="#3c8eba"
-              size={32}
-            />
-          </TouchableOpacity>
-          <TextInput style={styles.text_input} placeholder="Search" />
-          <TouchableOpacity>
-            <MaterialCommunityIcons
-              name="filter-menu"
-              size={32}
-              color="#3c8eba"
-            />
-          </TouchableOpacity>
+    <>
+      {events.length ? (
+        <SafeAreaView style={styles.outerContainer}>
+          <View>
+            <View style={homeStyles.nav_container}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Location");
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faMapLocationDot}
+                  color="#3c8eba"
+                  size={32}
+                />
+              </TouchableOpacity>
+              <TextInput style={styles.text_input} placeholder="Search" />
+              <TouchableOpacity>
+                <MaterialCommunityIcons
+                  name="filter-menu"
+                  size={32}
+                  color="#3c8eba"
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={homeStyles.horizontal_list_container}>
+              <Text
+                style={{
+                  backgroundColor: "#cacfcc",
+                  padding: 6,
+                }}
+              >
+                Popular Events
+              </Text>
+              <FlatList
+                data={events}
+                renderItem={({ item }) => renderHorizontalItems({ item })}
+                keyExtractor={(item) => item._id}
+                horizontal={true}
+              />
+            </View>
+            <View style={homeStyles.vertical_list_container}>
+              <Text
+                style={{
+                  backgroundColor: "#cacfcc",
+                  padding: 6,
+                }}
+              >
+                Events Near You
+              </Text>
+              <FlatList
+                data={events}
+                renderItem={({ item }) =>
+                  renderVerticalItems({ item, navigation })
+                }
+                keyExtractor={(item) => item._id}
+                horizontal={false}
+              />
+            </View>
+          </View>
+        </SafeAreaView>
+      ) : (
+        <View style={{ marginTop: 300 }}>
+          <ActivityIndicator size="large" color="#0000ff" />
         </View>
-        <View style={homeStyles.horizontal_list_container}>
-          <Text
-            style={{
-              backgroundColor: "#cacfcc",
-              padding: 6,
-            }}
-          >
-            Popular Events
-          </Text>
-          <FlatList
-            data={events}
-            renderItem={({ item }) => renderHorizontalItems({ item })}
-            keyExtractor={(item) => item._id}
-            horizontal={true}
-          />
-        </View>
-        <View style={homeStyles.vertical_list_container}>
-          <Text
-            style={{
-              backgroundColor: "#cacfcc",
-              padding: 6,
-            }}
-          >
-            Events Near You
-          </Text>
-          <FlatList
-            data={events}
-            renderItem={({ item }) => renderVerticalItems({ item, navigation })}
-            keyExtractor={(item) => item._id}
-            horizontal={false}
-          />
-        </View>
-      </View>
-    </SafeAreaView>
+      )}
+    </>
   );
 }
 
