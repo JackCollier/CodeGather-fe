@@ -15,8 +15,9 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { styles } from "../../styles/Styling";
 import { useEffect, useState } from "react";
 import { getCityData } from "../../utils/CityApi";
+import Navigation from "../../navigation/Navigation";
 
-export default function SignUp() {
+export default function SignUp({ navigation }: { navigation: any }) {
   const [selected, setSelected] = useState("");
   const [cityList, setCityList] = useState([]);
 
@@ -87,7 +88,10 @@ export default function SignUp() {
                 maxHeight={110}
               />
             </View>
-            <Pressable style={styles.btn}>
+            <Pressable
+              style={styles.btn}
+              onPress={() => navigation.navigate("Signin")}
+            >
               <Text style={styles.btn_text}>Sign up</Text>
             </Pressable>
           </View>
