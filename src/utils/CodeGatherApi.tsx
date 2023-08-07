@@ -27,3 +27,53 @@ export const postLogin = async (email: string, password: string) => {
   const data = await response.json();
   return data;
 };
+
+interface Singup {
+  email: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  username: string;
+  date_of_birth?: string;
+  location: string;
+  avatar?: string;
+  bio?: string;
+}
+
+export const postSingup = async ({
+  email,
+  password,
+  first_name,
+  last_name,
+  username,
+  date_of_birth,
+  location,
+  avatar,
+  bio,
+}: Singup) => {
+  const response = await fetch(
+    `https://codegather.onrender.com/api/users/createuser`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: {
+          email,
+          password,
+          first_name,
+          last_name,
+          username,
+          date_of_birth,
+          location,
+          avatar,
+          bio,
+        },
+      }),
+    }
+  );
+  const data = await response.json();
+  return data;
+};
