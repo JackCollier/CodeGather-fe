@@ -11,8 +11,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCode, faBug } from "@fortawesome/free-solid-svg-icons";
 import { styles } from "../../styles/Styling";
+import { useContext } from "react";
+import MyContext from "../../contexts/Context";
 
 function Profile() {
+  const testVariable = useContext(MyContext);
+  console.log(testVariable);
+
   interface profile {
     avatar: string;
     fullName: string;
@@ -48,6 +53,7 @@ function Profile() {
         console.error("Couldn't open the link", error);
       }
     };
+
     return (
       <View style={profileStyles.links}>
         <Text
