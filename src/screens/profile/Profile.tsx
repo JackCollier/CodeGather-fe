@@ -21,9 +21,7 @@ function Profile() {
 
   useEffect(() => {
     setProfileStorage(profile);
-    AsyncStorage.getItem("profileId").then((data) => {
-      console.log("onProfile------", data);
-    });
+    AsyncStorage.getItem("profileId").then((data) => {});
   }, []);
 
   // interface profile {
