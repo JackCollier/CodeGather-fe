@@ -9,13 +9,26 @@ import {
   Platform,
 } from "react-native";
 import { styles } from "../../styles/Styling";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { postLogin } from "../../utils/CodeGatherApi";
 
 export default function SignIn({ navigation }: any) {
   const [signInDetails, setSignInDetails] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState(false);
+
+  const handleLogin = (email: string, password: string) => {
+    postLogin(email, password).then((res) => {
+      if (res.success) {
+        setError(false);
+        navigation.navigate("Tab");
+      } else {
+        setError(true);
+      }
+    });
+  };
 
   return (
     <SafeAreaView
@@ -53,9 +66,12 @@ export default function SignIn({ navigation }: any) {
               }
             />
           </View>
+          {error && <Text>Error Logging in</Text>}
           <Pressable
             style={styles.btn}
-            onPress={() => navigation.navigate("Tab")}
+            onPress={() => {
+              handleLogin(signInDetails.email, signInDetails.password);
+            }}
           >
             <Text style={styles.btn_text}>Sign in</Text>
           </Pressable>
