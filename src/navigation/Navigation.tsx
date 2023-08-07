@@ -72,6 +72,23 @@ export default function Navigation() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Signin"
+          component={SignIn}
+          options={{ title: "Sign in" }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={SignUp}
+          options={{ title: "Sign up" }}
+        />
+        <Stack.Screen
           name="Tab"
           component={Tab}
           options={{
@@ -91,23 +108,6 @@ export default function Navigation() {
           options={{
             title: "Event",
           }}
-        />
-        <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Signin"
-          component={SignIn}
-          options={{ title: "Sign in" }}
-        />
-        <Stack.Screen
-          name="Signup"
-          component={SignUp}
-          options={{ title: "Sign up" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
