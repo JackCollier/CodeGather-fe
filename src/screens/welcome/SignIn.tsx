@@ -47,26 +47,31 @@ export default function SignIn({ navigation }: any) {
             <TextInput
               onChangeText={(text) =>
                 setSignInDetails((currentValue) => {
-                  return { ...currentValue, email: text };
+                  {
+                    setError(false);
+                    return { ...currentValue, email: text };
+                  }
                 })
               }
-              style={styles.text_input}
+              style={{ ...styles.text_input, width: 200 }}
               placeholder="Email..."
             />
           </View>
           <View>
             <Text style={{ ...styles.text_input_label }}>Password</Text>
             <TextInput
-              style={styles.text_input}
+              style={{ ...styles.text_input, width: 200 }}
               placeholder="Password..."
-              onChangeText={(text) =>
+              onChangeText={(text) => {
+                setError(false);
                 setSignInDetails((currentValue) => {
                   return { ...currentValue, password: text };
-                })
-              }
+                });
+              }}
+              secureTextEntry={true}
             />
           </View>
-          {error && <Text>Error Logging in</Text>}
+          {error && <Text style={{ color: "red" }}>Error Logging in</Text>}
           <Pressable
             style={styles.btn}
             onPress={() => {
