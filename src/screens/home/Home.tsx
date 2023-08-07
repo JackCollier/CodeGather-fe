@@ -74,7 +74,7 @@ export default function Home({ navigation }: any) {
         <View style={homeStyles.horizontalCard}>
           <Text>{item.event_title}</Text>
           <Image source={{ uri: item.image }} style={homeStyles.smallImg} />
-          <Text>{item.date_time}</Text>
+          <Text>{new Date(item.date_time).toLocaleDateString()}</Text>
           <LocationText lat={item.location.lat} long={item.location.long} />
           <Text>Attending: {item.attending.length}</Text>
         </View>
@@ -97,9 +97,9 @@ export default function Home({ navigation }: any) {
             </Text>
           </TouchableOpacity>
           <View style={{ ...styles.row_space_between, maxWidth: 185 }}>
-            <Text>{item.date_time}</Text>
+            <Text>{new Date(item.date_time).toLocaleDateString()}</Text>
+            <LocationText lat={item.location.lat} long={item.location.long} />
           </View>
-          <LocationText lat={item.location.lat} long={item.location.long} />
           <View style={styles.row_flex_start}>
             <View style={{ width: 180 }}>
               <Text style={{}}>{item.topics[0] + " " + item.topics[1]}</Text>
