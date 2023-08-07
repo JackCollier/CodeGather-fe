@@ -11,12 +11,14 @@ import {
 import { styles } from "../../styles/Styling";
 import { useEffect, useState } from "react";
 import { postLogin } from "../../utils/CodeGatherApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignIn({ navigation }: any) {
   const [signInDetails, setSignInDetails] = useState({
     email: "",
     password: "",
   });
+
   const [error, setError] = useState(false);
 
   const handleLogin = (email: string, password: string) => {
@@ -24,6 +26,12 @@ export default function SignIn({ navigation }: any) {
       if (res.success) {
         setError(false);
         navigation.navigate("Tab");
+        console.log(res);
+
+        AsyncStorage.setItem(
+          "code-gather",
+          JSON.stringify({ profile_id: res.profile_id })
+        );
       } else {
         setError(true);
       }
