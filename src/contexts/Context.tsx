@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getProfileById } from "../utils/CodeGatherApi";
 
@@ -6,7 +6,7 @@ const MyContext = React.createContext();
 export default MyContext;
 
 export const MyContextProvider = ({ children }) => {
-  let profileData;
+  const [profileData, setProfileData] = useState(null);
 
   useEffect(() => {
     AsyncStorage.getItem("profileId")
@@ -15,9 +15,12 @@ export const MyContextProvider = ({ children }) => {
         return getProfileById(profile_id);
       })
       .then((profile) => {
-        profileData = profile;
+        setProfileData(profile);
+      })
+      .catch((err) => {
+        console.log("error----------------", err);
       });
-  }, []);
+  }, [profileData]);
 
   return (
     <MyContext.Provider value={profileData}>{children}</MyContext.Provider>
