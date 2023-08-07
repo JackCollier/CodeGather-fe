@@ -26,10 +26,8 @@ export default function SignIn({ navigation }: any) {
       if (res.success) {
         setError(false);
         navigation.navigate("Tab");
-        console.log(res);
-
         AsyncStorage.setItem(
-          "code-gather",
+          "profileId",
           JSON.stringify({ profile_id: res.profile_id })
         );
       } else {
