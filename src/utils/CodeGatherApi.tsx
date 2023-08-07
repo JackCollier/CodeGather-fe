@@ -77,3 +77,11 @@ export const postSingup = async ({
   const data = await response.json();
   return data;
 };
+
+export const getProfileById = async (id: string) => {
+  const response = await fetch(
+    `https://codegather.onrender.com/api/profiles/${id}`
+  );
+  const data = response.json();
+  return data;
+};
