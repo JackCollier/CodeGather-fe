@@ -13,13 +13,17 @@ import { faCode, faBug } from "@fortawesome/free-solid-svg-icons";
 import { styles } from "../../styles/Styling";
 import { useContext, useEffect, useState } from "react";
 import MyContext from "../../contexts/Context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Profile() {
-  const [profile, setProfile] = useState();
+  const [profileStorage, setProfileStorage] = useState(null);
+  const { profile } = useContext(MyContext);
 
   useEffect(() => {
-    const profileData = useContext(MyContext);
-    setProfile(profileData);
+    setProfileStorage(profile);
+    AsyncStorage.getItem("profileId").then((data) => {
+      console.log("onProfile------", data);
+    });
   }, []);
 
   // interface profile {
@@ -58,58 +62,66 @@ function Profile() {
   };
 
   return (
-    <SafeAreaView style={styles.outerContainer}>
-      <View style={profileStyles.container}>
-        <View style={profileStyles.profileContainer}>
-          <View style={profileStyles.topOfProfile}>
-            <View style={profileStyles.row}>
-              {/* <Image
-                style={profileStyles.avatar}
-                source={{
-                  uri: userData.avatar,
-                }}
-              /> */}
-              <View style={profileStyles.profileText}>
-                <Text style={profileStyles.fullname}>
-                  {profile.first_name + profile.last_name}
+    <>
+      {profile ? (
+        <SafeAreaView style={styles.outerContainer}>
+          <View style={profileStyles.container}>
+            <View style={profileStyles.profileContainer}>
+              <View style={profileStyles.topOfProfile}>
+                <View style={profileStyles.row}>
+                  <Image
+                    style={profileStyles.avatar}
+                    source={{
+                      uri: profile.avatar,
+                    }}
+                  />
+                  <View style={profileStyles.profileText}>
+                    <Text style={profileStyles.fullname}>
+                      {profile.first_name + profile.last_name}
+                    </Text>
+                    <Text style={profileStyles.userName}>
+                      @{profile.username}
+                    </Text>
+                    <Text> Rating: {profile.host_rating}</Text>
+                    <Text> {profile.location}</Text>
+                  </View>
+                </View>
+
+                <Text style={profileStyles.bio}>{profile.bio}</Text>
+
+                <Text style={profileStyles.social_media_title}>
+                  Social Media links
                 </Text>
-                <Text style={profileStyles.userName}>@{profile.username}</Text>
-                <Text> Rating: {profile.host_rating}</Text>
-                <Text> {profile.location}</Text>
+                <View>
+                  {/* <FlatList data={profile.socials} renderItem={renderSocials} /> */}
+                </View>
+              </View>
+
+              <View style={profileStyles.bottomOfProfile}>
+                <View style={{ marginRight: 30 }}>
+                  <Text style={{ fontSize: 16 }}>Programming languages</Text>
+                  <FlatList
+                    data={profile.coding_languages}
+                    renderItem={renderLangs}
+                  />
+                </View>
+
+                <View>
+                  <Text style={{ fontSize: 16 }}>Interests</Text>
+                  {/* <FlatList data={userData.interests} renderItem={renderLangs} /> */}
+                </View>
               </View>
             </View>
-
-            <Text style={profileStyles.bio}>{profile.bio}</Text>
-
-            <Text style={profileStyles.social_media_title}>
-              Social Media links
-            </Text>
-            <View>
-              {/* <FlatList data={profile.socials} renderItem={renderSocials} /> */}
+            <View style={profileStyles.eventContainer}>
+              <Text>Events Hosting</Text>
+              <Text>Events atteding</Text>
             </View>
           </View>
-
-          <View style={profileStyles.bottomOfProfile}>
-            <View style={{ marginRight: 30 }}>
-              <Text style={{ fontSize: 16 }}>Programming languages</Text>
-              <FlatList
-                data={profile.coding_languages}
-                renderItem={renderLangs}
-              />
-            </View>
-
-            <View>
-              <Text style={{ fontSize: 16 }}>Interests</Text>
-              {/* <FlatList data={userData.interests} renderItem={renderLangs} /> */}
-            </View>
-          </View>
-        </View>
-        <View style={profileStyles.eventContainer}>
-          <Text>Events Hosting</Text>
-          <Text>Events atteding</Text>
-        </View>
-      </View>
-    </SafeAreaView>
+        </SafeAreaView>
+      ) : (
+        <Text>Loading....</Text>
+      )}
+    </>
   );
 }
 
