@@ -45,7 +45,10 @@ export default function SingleEventPage({ route }: { route: any }) {
         <View style={SingleEventStyles.event_container}>
           <View style={SingleEventStyles.event_header}>
             <Text style={{ fontSize: 20 }}>{article.event_title}</Text>
-            <Text>{article.date_time}</Text>
+            <Text>{new Date(article.date_time).toLocaleDateString()}</Text>
+            <Text>
+              {new Date(article.date_time).toLocaleTimeString().slice(0, -3)}
+            </Text>
           </View>
           <View>
             <Image source={{ uri: article.image }} style={{ height: 200 }} />
@@ -96,7 +99,6 @@ const SingleEventStyles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-end",
     flexDirection: "row",
-    borderWidth: 1,
     marginBottom: 2,
   },
   topics_container: {
