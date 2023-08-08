@@ -19,6 +19,8 @@ import { SelectList } from "react-native-dropdown-select-list";
 
 import * as ImagePicker from "expo-image-picker";
 import { getCityData } from "../../utils/CityApi";
+import { postEvent } from "../../utils/CodeGatherApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HostEvents() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -28,10 +30,23 @@ export default function HostEvents() {
   const [topic, setTopic] = useState("");
   const [limit, setLimit] = useState(false);
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
+  const [eventData, setEventData] = useState({
+    user_id: "",
+    event_title: "",
+    location: "",
+    image: "",
+    date_time: "",
+    topics: "",
+    attending: [],
+    description: "",
+    size_limit: "",
+  });
 
   const [selected, setSelected] = useState("");
   const [cityList, setCityList] = useState([]);
-  console.log("selected---------", selected);
+
+  // console.log("selected---------", selected);
 
   useEffect(() => {
     getCityData().then((res) => {
@@ -49,7 +64,14 @@ export default function HostEvents() {
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
-
+  useEffect(() => {
+    AsyncStorage.getItem("profileId").then((id) => {
+      const res = JSON.parse(id);
+      setEventData((currenValue) => {
+        return { ...currenValue, user_id: res.profile_id };
+      });
+    }, []);
+  });
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
@@ -58,9 +80,11 @@ export default function HostEvents() {
     setDate(date.toLocaleDateString());
     setTime(date.toLocaleTimeString().slice(0, -3));
     hideDatePicker();
-  };
 
-  const [image, setImage] = useState(null);
+    setEventData((currentData) => {
+      return { ...currentData, date_time: date };
+    });
+  };
 
   const pickImage = async () => {
     let result: any = await ImagePicker.launchImageLibraryAsync({
@@ -72,7 +96,24 @@ export default function HostEvents() {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+
+      setEventData((currentData) => {
+        return { ...currentData, image: result.assets[0].uri };
+      });
     }
+  };
+
+  const handlerPostEvent = async () => {
+    setEventData((currentData) => {
+      return { ...currentData, topics: topics };
+    });
+    console.log(eventData);
+
+    postEvent(eventData)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.log("error---->>", err));
   };
 
   return (
@@ -89,18 +130,14 @@ export default function HostEvents() {
             <TextInput
               style={styles.text_input}
               placeholder="add event title"
+              onChangeText={(text) => {
+                setEventData((currentData) => {
+                  return { ...currentData, event_title: text };
+                });
+              }}
             />
           </View>
-          <SelectList
-            setSelected={(val: string) => {
-              setSelected(val);
-            }}
-            data={cityList}
-            save="value"
-            boxStyles={{ borderColor: "#8cb3d9" }}
-            dropdownStyles={{ borderColor: "#8cb3d9" }}
-            maxHeight={110}
-          />
+          <TextInput placeholder="add location" />
           <View style={hostStyles.image_area_container}>
             <Pressable style={hostStyles.pressable_btn} onPress={pickImage}>
               <Text style={hostStyles.btn_text}>Upload Image</Text>
@@ -169,7 +206,12 @@ export default function HostEvents() {
               multiline
               numberOfLines={10}
               style={hostStyles.description_input_text}
-              onChangeText={(text) => setDescription(text)}
+              onChangeText={(text) => {
+                setDescription(text);
+                setEventData((currenValue) => {
+                  return { ...currenValue, description: text };
+                });
+              }}
             />
           </View>
           <View style={{ width: "100%" }}>
@@ -178,10 +220,17 @@ export default function HostEvents() {
               keyboardType="numeric"
               placeholder="size limit ..."
               style={{ borderWidth: 1, paddingLeft: 10 }}
+              onChangeText={(text) => {
+                setEventData((currenValue) => {
+                  return { ...currenValue, size_limit: text };
+                });
+              }}
             />
           </View>
           <View>
-            <Button title="Create Event"></Button>
+            <Pressable onPress={handlerPostEvent}>
+              <Text>Create Event</Text>
+            </Pressable>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
