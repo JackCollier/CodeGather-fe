@@ -13,13 +13,16 @@ export const MyContextProvider = ({ children }) => {
     AsyncStorage.getItem("profileId")
       .then((id) => {
         const { profile_id } = JSON.parse(id);
+        console.log(profile_id);
+
         return getProfileById(profile_id);
       })
       .then((profile) => {
+        console.log("profile", profile);
         setProfileData(profile);
       })
       .catch((err) => {});
-  }, [profileData]);
+  }, [isEventPosted]);
 
   return (
     <MyContext.Provider
