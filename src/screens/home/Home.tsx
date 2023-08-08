@@ -11,12 +11,13 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faMapLocationDot, faFilter } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, { useContext } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { styles } from "../../styles/Styling";
 import { useState, useEffect } from "react";
 import { getEventData } from "../../utils/CodeGatherApi";
 import { convertLongAndLat } from "../../utils/CityApi";
+import MyContext from "../../contexts/Context";
 
 export type Article = {
   _id: string;
@@ -58,12 +59,13 @@ const LocationText = ({ lat, long }) => {
 
 export default function Home({ navigation }: any) {
   const [events, setEvents] = useState<Article[]>([]);
+  const { isEventPosted } = useContext(MyContext);
 
   useEffect(() => {
     getEventData().then((res) => {
       setEvents(res);
     });
-  }, []);
+  }, [isEventPosted]);
 
   const handlerClick = (event_id: string) => {
     navigation.navigate("SingleEventPage", { event_id });
