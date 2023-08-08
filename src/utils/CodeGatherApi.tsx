@@ -85,3 +85,25 @@ export const getProfileById = async (id: string) => {
   const data = response.json();
   return data;
 };
+
+export const postEvent = async ({
+  event_title,
+  date_time,
+  topics,
+  image,
+  location,
+  size_limit,
+  attending,
+  description,
+}) => {
+  const response = await fetch(`https://codegather.onrender.com/api/events`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}),
+  });
+  const data = await response.json();
+  return data;
+};
