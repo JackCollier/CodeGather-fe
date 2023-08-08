@@ -18,7 +18,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { SelectList } from "react-native-dropdown-select-list";
 
 import * as ImagePicker from "expo-image-picker";
-import { getCityData } from "../../utils/CityApi";
+import { convertAddressToLongAndLat, getCityData } from "../../utils/CityApi";
 import { postEvent } from "../../utils/CodeGatherApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -34,44 +34,32 @@ export default function HostEvents() {
   const [eventData, setEventData] = useState({
     user_id: "",
     event_title: "",
-    location: "",
+    location: {
+      lat: 0,
+      long: 0,
+    },
+    size_limit: 0,
     image: "",
     date_time: "",
     topics: "",
     attending: [],
     description: "",
-    size_limit: "",
   });
-
-  const [selected, setSelected] = useState("");
-  const [cityList, setCityList] = useState([]);
-
-  // console.log("selected---------", selected);
-
-  useEffect(() => {
-    getCityData().then((res) => {
-      console.log("fetch");
-
-      const formattedCities = res.results.map(
-        (item: { name: string }, index: number) => {
-          return { key: index, value: item.name };
-        }
-      );
-      setCityList(formattedCities);
-    });
-  }, []);
+  const [address, setAddress] = useState("");
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
+
   useEffect(() => {
     AsyncStorage.getItem("profileId").then((id) => {
       const res = JSON.parse(id);
       setEventData((currenValue) => {
         return { ...currenValue, user_id: res.profile_id };
       });
-    }, []);
-  });
+    });
+  }, []);
+
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
@@ -82,7 +70,7 @@ export default function HostEvents() {
     hideDatePicker();
 
     setEventData((currentData) => {
-      return { ...currentData, date_time: date };
+      return { ...currentData, date_time: String(date) };
     });
   };
 
@@ -107,12 +95,8 @@ export default function HostEvents() {
     setEventData((currentData) => {
       return { ...currentData, topics: topics };
     });
-    console.log(eventData);
-
     postEvent(eventData)
-      .then((response) => {
-        console.log(response);
-      })
+      .then((response) => {})
       .catch((err) => console.log("error---->>", err));
   };
 
@@ -137,7 +121,30 @@ export default function HostEvents() {
               }}
             />
           </View>
-          <TextInput placeholder="add location" />
+          <TextInput
+            placeholder="add location"
+            style={styles.text_input}
+            onChangeText={(text) => setAddress(text)}
+          />
+          <Pressable
+            style={hostStyles.pressable_btn}
+            onPress={() => {
+              convertAddressToLongAndLat(address)
+                .then((data) => {
+                  setEventData((prev) => {
+                    return {
+                      ...prev,
+                      location: { lat: data[0].lat, long: data[0].lon },
+                    };
+                  });
+                })
+                .catch((err) => console.log(err));
+            }}
+          >
+            <Text style={hostStyles.btn_text}>Add Location</Text>
+          </Pressable>
+          <View></View>
+
           <View style={hostStyles.image_area_container}>
             <Pressable style={hostStyles.pressable_btn} onPress={pickImage}>
               <Text style={hostStyles.btn_text}>Upload Image</Text>
