@@ -57,12 +57,12 @@ export default function HostEvents() {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 120 : 90}
-    >
-      <ScrollView>
-        <SafeAreaView style={hostStyles.host_contaier}>
+    <SafeAreaView style={hostStyles.host_contaier}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 80}
+      >
+        <ScrollView>
           <Text style={hostStyles.host_header}>Host your Event</Text>
 
           <View>
@@ -154,9 +154,9 @@ export default function HostEvents() {
           <View>
             <Button title="Create Event"></Button>
           </View>
-        </SafeAreaView>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -168,15 +168,13 @@ const hostStyles = StyleSheet.create({
     flex: 0,
     justifyContent: "center",
     alignItems: "center",
-    width: "80%",
+    width: "100%",
     alignSelf: "center",
     marginTop: 20,
     padding: 0,
     gap: 10,
   },
   image_area_container: {
-    borderWidth: 1,
-    borderColor: "red",
     borderRadius: 3,
     width: "75%",
   },
