@@ -10,7 +10,7 @@ import {
   Pressable,
   Platform,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "../../styles/Styling";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -21,6 +21,7 @@ import * as ImagePicker from "expo-image-picker";
 import { convertAddressToLongAndLat, getCityData } from "../../utils/CityApi";
 import { postEvent } from "../../utils/CodeGatherApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import MyContext from "../../contexts/Context";
 
 export default function HostEvents() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -46,6 +47,7 @@ export default function HostEvents() {
     description: "",
   });
   const [address, setAddress] = useState("");
+  const { setIsEventPosted } = useContext(MyContext);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -98,6 +100,9 @@ export default function HostEvents() {
     postEvent(eventData)
       .then((response) => {})
       .catch((err) => console.log("error---->>", err));
+    setIsEventPosted((currentValue) => {
+      return !currentValue;
+    });
   };
 
   return (
