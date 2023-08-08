@@ -17,7 +17,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Profile() {
   const [profileStorage, setProfileStorage] = useState(null);
-  const { profile } = useContext(MyContext);
+  const {
+    profileData: { profile },
+  } = useContext(MyContext);
+  console.log("profile--------", profile);
 
   useEffect(() => {
     setProfileStorage(profile);
