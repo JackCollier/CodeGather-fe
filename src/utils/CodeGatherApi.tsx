@@ -87,6 +87,7 @@ export const getProfileById = async (id: string) => {
 };
 
 interface Event {
+  user_id: string;
   event_title: string;
   location: string;
   image: string;
@@ -98,6 +99,7 @@ interface Event {
 }
 
 export const postEvent = async ({
+  user_id,
   event_title,
   location,
   image,
@@ -115,6 +117,7 @@ export const postEvent = async ({
     },
     body: JSON.stringify({
       event: {
+        user_id,
         event_title,
         location,
         image,
