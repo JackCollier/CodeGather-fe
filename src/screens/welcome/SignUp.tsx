@@ -28,6 +28,9 @@ export default function SignUp({ navigation }: { navigation: any }) {
     boolean: false,
     message: "",
   });
+
+  console.log("from signup", selected);
+
   const [signUpDetail, setSignUpDetail] = useState({
     email: "",
     password: "",
