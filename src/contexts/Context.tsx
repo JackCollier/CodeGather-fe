@@ -17,9 +17,7 @@ export const MyContextProvider = ({ children }) => {
       .then((profile) => {
         setProfileData(profile);
       })
-      .catch((err) => {
-        console.log("error----------------", err);
-      });
+      .catch((err) => {});
   }, [profileData]);
 
   return (

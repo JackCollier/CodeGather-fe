@@ -13,11 +13,17 @@ import SingleEventPage from "../screens/home/SingleEventPage";
 import Profile from "../screens/profile/Profile";
 import Location from "../screens/location/Location";
 import HostEvents from "../screens/host_events/HostEvents";
+import { useEffect } from "react";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
-function Tab() {
+function Tab({ navigation }: any) {
+  useEffect(() => {
+    navigation.addListener("beforeRemove", (e) => {
+      e.preventDefault();
+    });
+  }, []);
   return (
     <BottomTab.Navigator
       screenOptions={({ route }) => ({
@@ -93,6 +99,7 @@ export default function Navigation() {
           component={Tab}
           options={{
             headerShown: false,
+            gestureEnabled: false,
           }}
         />
         <Stack.Screen
