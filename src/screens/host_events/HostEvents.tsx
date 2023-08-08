@@ -95,28 +95,29 @@ export default function HostEvents() {
   };
 
   const handlerPostEvent = async () => {
-    // setEventData((currentData) => {
-    //   return { ...currentData, topics: topics };
-    // });
-    setAddress("");
-    setTopic("");
-    setEventData({
-      user_id: "",
-      event_title: "",
-      location: {
-        lat: 0,
-        long: 0,
-      },
-      size_limit: 0,
-      image: "",
-      date_time: "",
-      topics: "",
-      attending: [],
-      description: "",
+    setEventData((currentData) => {
+      return { ...currentData, topics: topics };
     });
 
     postEvent(eventData)
-      .then((response) => {})
+      .then((response) => {
+        setAddress("");
+        setTopic("");
+        setEventData({
+          user_id: "",
+          event_title: "",
+          location: {
+            lat: 0,
+            long: 0,
+          },
+          size_limit: 0,
+          image: "",
+          date_time: "",
+          topics: "",
+          attending: [],
+          description: "",
+        });
+      })
       .catch((err) => console.log("error---->>", err));
 
     setIsEventPosted((currentValue) => {
