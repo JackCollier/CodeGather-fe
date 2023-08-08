@@ -7,6 +7,7 @@ export default MyContext;
 
 export const MyContextProvider = ({ children }) => {
   const [profileData, setProfileData] = useState(null);
+  const [isEventPosted, setIsEventPosted] = useState(false);
 
   useEffect(() => {
     AsyncStorage.getItem("profileId")
@@ -21,6 +22,10 @@ export const MyContextProvider = ({ children }) => {
   }, [profileData]);
 
   return (
-    <MyContext.Provider value={profileData}>{children}</MyContext.Provider>
+    <MyContext.Provider
+      value={{ profileData, isEventPosted, setIsEventPosted }}
+    >
+      {children}
+    </MyContext.Provider>
   );
 };
