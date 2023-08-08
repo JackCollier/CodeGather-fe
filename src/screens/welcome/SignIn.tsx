@@ -22,6 +22,7 @@ export default function SignIn({ navigation }: any) {
   const [error, setError] = useState(false);
 
   const handleLogin = (email: string, password: string) => {
+    navigation.replace("Tab");
     postLogin(email, password).then((res) => {
       if (res.success) {
         setError(false);
