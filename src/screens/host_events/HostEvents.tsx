@@ -82,6 +82,7 @@ export default function HostEvents() {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true,
     });
 
     if (!result.canceled) {
@@ -94,12 +95,30 @@ export default function HostEvents() {
   };
 
   const handlerPostEvent = async () => {
-    setEventData((currentData) => {
-      return { ...currentData, topics: topics };
+    // setEventData((currentData) => {
+    //   return { ...currentData, topics: topics };
+    // });
+    setAddress("");
+    setTopic("");
+    setEventData({
+      user_id: "",
+      event_title: "",
+      location: {
+        lat: 0,
+        long: 0,
+      },
+      size_limit: 0,
+      image: "",
+      date_time: "",
+      topics: "",
+      attending: [],
+      description: "",
     });
+
     postEvent(eventData)
       .then((response) => {})
       .catch((err) => console.log("error---->>", err));
+
     setIsEventPosted((currentValue) => {
       return !currentValue;
     });
@@ -109,16 +128,25 @@ export default function HostEvents() {
     <SafeAreaView style={hostStyles.host_contaier}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 80}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 120}
       >
-        <ScrollView>
-          <Text style={hostStyles.host_header}>Host your Event</Text>
-
-          <View>
-            <Text>Event Title</Text>
+        <ScrollView
+          contentContainerStyle={{
+            flex: 0,
+            justifyContent: "flex-start",
+            alignItems: "center",
+            alignSelf: "center",
+            alignContent: "center",
+            width: "90%",
+            overflow: "hidden",
+          }}
+        >
+          <View style={{ marginBottom: 10 }}>
+            <Text>Event Title:</Text>
             <TextInput
               style={styles.text_input}
-              placeholder="add event title"
+              placeholder="event title... "
+              value={eventData.event_title}
               onChangeText={(text) => {
                 setEventData((currentData) => {
                   return { ...currentData, event_title: text };
@@ -129,10 +157,11 @@ export default function HostEvents() {
           <TextInput
             placeholder="add location"
             style={styles.text_input}
+            value={address}
             onChangeText={(text) => setAddress(text)}
           />
           <Pressable
-            style={hostStyles.pressable_btn}
+            style={{ ...hostStyles.pressable_btn, width: "75%" }}
             onPress={() => {
               convertAddressToLongAndLat(address)
                 .then((data) => {
@@ -148,7 +177,6 @@ export default function HostEvents() {
           >
             <Text style={hostStyles.btn_text}>Add Location</Text>
           </Pressable>
-          <View></View>
 
           <View style={hostStyles.image_area_container}>
             <Pressable style={hostStyles.pressable_btn} onPress={pickImage}>
@@ -160,8 +188,6 @@ export default function HostEvents() {
           </View>
           <View
             style={{
-              borderWidth: 1,
-              borderColor: "red",
               borderRadius: 3,
               width: "75%",
             }}
@@ -173,8 +199,17 @@ export default function HostEvents() {
               <Text style={hostStyles.btn_text}>Event Date and Time</Text>
             </Pressable>
           </View>
-          <Text>{date}</Text>
-          <Text>{time}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "75%",
+              marginVertical: 5,
+            }}
+          >
+            <Text>{date}</Text>
+            <Text>{time}</Text>
+          </View>
           <DateTimePickerModal
             isVisible={isDatePickerVisible}
             onConfirm={handleConfirm}
@@ -190,6 +225,7 @@ export default function HostEvents() {
                 setTopic(text);
               }}
               style={styles.text_input}
+              value={topic}
               placeholder={
                 !limit ? "add your topic (Limit is 4)" : "limit reached"
               }
@@ -207,16 +243,17 @@ export default function HostEvents() {
                 });
               }}
               disabled={limit}
-              style={hostStyles.pressable_btn}
+              style={{ ...hostStyles.pressable_btn, width: 255 }}
             >
-              <Text>Add Topic</Text>
+              <Text style={{ color: "white" }}>Add Topic</Text>
             </Pressable>
           </View>
-          <View style={{ width: "100%" }}>
+          <View style={{ width: "75%", alignSelf: "center" }}>
             <Text style={{ textAlign: "center" }}>Description</Text>
             <TextInput
               multiline
               numberOfLines={10}
+              value={eventData.description}
               style={hostStyles.description_input_text}
               onChangeText={(text) => {
                 setDescription(text);
@@ -226,12 +263,16 @@ export default function HostEvents() {
               }}
             />
           </View>
-          <View style={{ width: "100%" }}>
+          <View style={{ width: "75%", marginVertical: 5 }}>
             <Text style={{ width: "100%" }}>Size Limit</Text>
             <TextInput
               keyboardType="numeric"
               placeholder="size limit ..."
-              style={{ borderWidth: 1, paddingLeft: 10 }}
+              style={{
+                borderWidth: 1,
+                borderColor: "#8cb3d9",
+                paddingLeft: 10,
+              }}
               onChangeText={(text) => {
                 setEventData((currenValue) => {
                   return { ...currenValue, size_limit: text };
@@ -240,8 +281,15 @@ export default function HostEvents() {
             />
           </View>
           <View>
-            <Pressable onPress={handlerPostEvent}>
-              <Text>Create Event</Text>
+            <Pressable
+              onPress={handlerPostEvent}
+              style={{
+                ...hostStyles.pressable_btn,
+                width: 255,
+                marginBottom: 60,
+              }}
+            >
+              <Text style={{ color: "white" }}>Create Event</Text>
             </Pressable>
           </View>
         </ScrollView>
@@ -251,16 +299,12 @@ export default function HostEvents() {
 }
 
 const hostStyles = StyleSheet.create({
-  host_header: {
-    fontSize: 20,
-  },
   host_contaier: {
-    flex: 0,
-    justifyContent: "center",
+    flex: 1,
+    justifyContent: "flex-start",
     alignItems: "center",
     width: "100%",
     alignSelf: "center",
-    marginTop: 20,
     padding: 0,
     gap: 10,
   },
@@ -274,6 +318,8 @@ const hostStyles = StyleSheet.create({
     backgroundColor: "#8cb3d9",
     alignItems: "center",
     paddingVertical: 5,
+    marginVertical: 5,
+    alignSelf: "center",
   },
   btn_text: {
     fontSize: 16,
@@ -287,7 +333,7 @@ const hostStyles = StyleSheet.create({
   description_input_text: {
     height: 100,
     width: "100%",
-    borderColor: "gray",
+    borderColor: "#8cb3d9",
     borderWidth: 1,
     paddingHorizontal: 8,
   },
