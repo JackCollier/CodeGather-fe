@@ -58,9 +58,9 @@ function Tab({ navigation }: any) {
       <BottomTab.Screen
         name="HostEvents"
         component={HostEvents}
-        options={{
-          headerShown: false,
-        }}
+        // options={{
+        //   headerShown: false,
+        // }}
       />
       <BottomTab.Screen
         name="Profile"
