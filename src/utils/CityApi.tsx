@@ -21,3 +21,9 @@ export const convertLongAndLat = async (lat, long) => {
   const data = await response.json();
   return data;
 };
+
+export const convertAddressToLongAndLat = async (address) => {
+  const response = await fetch(`https://geocode.maps.co/search?q=${address}`);
+  const data = await response.json();
+  return data;
+};
