@@ -10,13 +10,15 @@ import {
   Pressable,
   Platform,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "../../styles/Styling";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { SelectList } from "react-native-dropdown-select-list";
 
 import * as ImagePicker from "expo-image-picker";
+import { getCityData } from "../../utils/CityApi";
 
 export default function HostEvents() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -26,6 +28,23 @@ export default function HostEvents() {
   const [topic, setTopic] = useState("");
   const [limit, setLimit] = useState(false);
   const [description, setDescription] = useState("");
+
+  const [selected, setSelected] = useState("");
+  const [cityList, setCityList] = useState([]);
+  console.log("selected---------", selected);
+
+  useEffect(() => {
+    getCityData().then((res) => {
+      console.log("fetch");
+
+      const formattedCities = res.results.map(
+        (item: { name: string }, index: number) => {
+          return { key: index, value: item.name };
+        }
+      );
+      setCityList(formattedCities);
+    });
+  }, []);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -72,6 +91,16 @@ export default function HostEvents() {
               placeholder="add event title"
             />
           </View>
+          <SelectList
+            setSelected={(val: string) => {
+              setSelected(val);
+            }}
+            data={cityList}
+            save="value"
+            boxStyles={{ borderColor: "#8cb3d9" }}
+            dropdownStyles={{ borderColor: "#8cb3d9" }}
+            maxHeight={110}
+          />
           <View style={hostStyles.image_area_container}>
             <Pressable style={hostStyles.pressable_btn} onPress={pickImage}>
               <Text style={hostStyles.btn_text}>Upload Image</Text>
