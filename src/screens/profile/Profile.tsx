@@ -27,14 +27,16 @@ function Profile() {
   const [editPressed, setEditPressed] = useState(false);
   const [editSaved, setEditSaved] = useState(false);
 
+  const [proLang, setProLang] = useState("");
+
   useEffect(() => {
     setProfileStorage(profile);
   }, [editPressed]);
 
-  useEffect(() => {
-    setProfileStorage(profile);
-    AsyncStorage.getItem("profileId").then((data) => {});
-  }, []);
+  // useEffect(() => {
+  //   setProfileStorage(profile);
+  //   AsyncStorage.getItem("profileId").then((data) => {});
+  // }, []);
 
   useEffect(() => {
     patchProfile(profileStorage)
@@ -141,7 +143,16 @@ function Profile() {
 
               <View style={profileStyles.bottomOfProfile}>
                 <View style={{ marginRight: 30 }}>
+                  {editPressed ? (
+                    <TextInput
+                      style={{ ...profileStyles.bio, borderWidth: 1 }}
+                      onChangeText={(text) => setProLang(text)}
+                      placeholder="name, name, ...."
+                    />
+                  ) : null}
+
                   <Text style={{ fontSize: 16 }}>Programming languages</Text>
+
                   <FlatList
                     data={profile.coding_languages}
                     renderItem={renderLangs}
@@ -164,6 +175,13 @@ function Profile() {
               {editPressed && (
                 <Pressable
                   onPress={() => {
+                    setProfileStorage((prev) => {
+                      return {
+                        ...prev,
+                        coding_languages: [...prev.coding_languages, proLang],
+                      };
+                    });
+
                     setEditSaved((prev) => !prev);
                     setIsProfileUpdated((prev) => !prev);
                   }}
