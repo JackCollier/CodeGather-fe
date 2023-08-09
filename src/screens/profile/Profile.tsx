@@ -91,7 +91,7 @@ function Profile() {
                 </View>
                 {editPressed ? (
                   <TextInput
-                    style={profileStyles.bio}
+                    style={{ ...profileStyles.bio, borderWidth: 1 }}
                     onChangeText={(text) =>
                       setProfileStorage((prev) => {
                         return { ...prev, bio: text };
@@ -133,7 +133,7 @@ function Profile() {
                 <Text>Edit</Text>
               </Pressable>
               {editPressed && (
-                <Pressable onPress={() => setEditPressed(true)}>
+                <Pressable onPress={() => setEditSaved((prev) => !prev)}>
                   <Text>Save Profile</Text>
                 </Pressable>
               )}
@@ -204,7 +204,6 @@ const profileStyles = StyleSheet.create({
     paddingTop: 20,
     paddingLeft: 20,
     fontSize: 15,
-    borderWidth: 1,
   },
   social_media_title: {
     marginLeft: 20,
