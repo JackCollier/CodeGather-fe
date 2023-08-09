@@ -20,22 +20,11 @@ function Profile() {
   const {
     profileData: { profile },
   } = useContext(MyContext);
-  console.log("profile--------", profile);
 
   useEffect(() => {
     setProfileStorage(profile);
     AsyncStorage.getItem("profileId").then((data) => {});
   }, []);
-
-  // interface profile {
-  //   avatar: string;
-  //   fullName: string;
-  //   userName: string;
-  //   rating: number;
-  //   preferences: [];
-  //   bio: string;
-  //   socials: [];
-  // }
 
   const renderSocials = ({ item }: { item: any }) => {
     const handleLinkPress = async () => {
