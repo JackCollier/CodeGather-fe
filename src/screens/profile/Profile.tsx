@@ -21,14 +21,21 @@ function Profile() {
   const [profileStorage, setProfileStorage] = useState(null);
   const {
     profileData: { profile },
+    setIsProfileUpdated,
   } = useContext(MyContext);
+
   const [editPressed, setEditPressed] = useState(false);
   const [editSaved, setEditSaved] = useState(false);
 
   useEffect(() => {
     setProfileStorage(profile);
+  }, [editSaved]);
+
+  useEffect(() => {
+    setProfileStorage(profile);
     AsyncStorage.getItem("profileId").then((data) => {});
   }, []);
+
   console.log("pstorage", profileStorage);
 
   useEffect(() => {
@@ -132,8 +139,14 @@ function Profile() {
               <Pressable onPress={() => setEditPressed((prev) => !prev)}>
                 <Text>Edit</Text>
               </Pressable>
+
               {editPressed && (
-                <Pressable onPress={() => setEditSaved((prev) => !prev)}>
+                <Pressable
+                  onPress={() => {
+                    setEditSaved((prev) => !prev);
+                    setIsProfileUpdated((prev) => !prev);
+                  }}
+                >
                   <Text>Save Profile</Text>
                 </Pressable>
               )}
