@@ -13,7 +13,7 @@ export const MyContextProvider = ({ children }) => {
   useEffect(() => {
     AsyncStorage.getItem("profileId")
       .then((id) => {
-        const { profile_id } = JSON.parse(id);
+        const { profile_id } = JSON.parse(`${id}`);
         return getProfileById(profile_id);
       })
       .then((profile) => {
