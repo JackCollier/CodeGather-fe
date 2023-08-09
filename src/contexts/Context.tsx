@@ -10,17 +10,13 @@ export const MyContextProvider = ({ children }) => {
   const [isEventPosted, setIsEventPosted] = useState(false);
   const [isProfileUpdated, setIsProfileUpdated] = useState(false);
 
-  // console.log(isProfileUpdated);
-
   useEffect(() => {
     AsyncStorage.getItem("profileId")
       .then((id) => {
-        console.log(id);
         const { profile_id } = JSON.parse(id);
         return getProfileById(profile_id);
       })
       .then((profile) => {
-        console.log("profile----->>", profile);
         setProfileData(profile);
       })
       .catch((err) => {});
