@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   Linking,
+  TextInput,
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCode, faBug } from "@fortawesome/free-solid-svg-icons";
@@ -14,17 +15,29 @@ import { styles } from "../../styles/Styling";
 import { useContext, useEffect, useState } from "react";
 import MyContext from "../../contexts/Context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { patchProfile } from "../../utils/CodeGatherApi";
 
 function Profile() {
   const [profileStorage, setProfileStorage] = useState(null);
   const {
     profileData: { profile },
   } = useContext(MyContext);
+  const [editPressed, setEditPressed] = useState(false);
+  const [editSaved, setEditSaved] = useState(false);
 
   useEffect(() => {
     setProfileStorage(profile);
     AsyncStorage.getItem("profileId").then((data) => {});
   }, []);
+  console.log("pstorage", profileStorage);
+
+  useEffect(() => {
+    patchProfile(profileStorage)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }, [editSaved]);
 
   const renderSocials = ({ item }: { item: any }) => {
     const handleLinkPress = async () => {
@@ -76,9 +89,20 @@ function Profile() {
                     <Text> {profile.location}</Text>
                   </View>
                 </View>
-
-                <Text style={profileStyles.bio}>{profile.bio}</Text>
-
+                {editPressed ? (
+                  <TextInput
+                    style={profileStyles.bio}
+                    onChangeText={(text) =>
+                      setProfileStorage((prev) => {
+                        return { ...prev, bio: text };
+                      })
+                    }
+                  >
+                    Enter Bio
+                  </TextInput>
+                ) : (
+                  <Text style={profileStyles.bio}>{profile.bio}</Text>
+                )}
                 <Text style={profileStyles.social_media_title}>
                   Social Media links
                 </Text>
@@ -105,6 +129,14 @@ function Profile() {
             <View style={profileStyles.eventContainer}>
               <Text>Events Hosting</Text>
               <Text>Events atteding</Text>
+              <Pressable onPress={() => setEditPressed((prev) => !prev)}>
+                <Text>Edit</Text>
+              </Pressable>
+              {editPressed && (
+                <Pressable onPress={() => setEditPressed(true)}>
+                  <Text>Save Profile</Text>
+                </Pressable>
+              )}
             </View>
           </View>
         </SafeAreaView>
@@ -172,6 +204,7 @@ const profileStyles = StyleSheet.create({
     paddingTop: 20,
     paddingLeft: 20,
     fontSize: 15,
+    borderWidth: 1,
   },
   social_media_title: {
     marginLeft: 20,
