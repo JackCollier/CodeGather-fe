@@ -132,3 +132,43 @@ export const postEvent = async ({
   const data = await response.json();
   return data;
 };
+
+export const patchProfile = async ({
+  _id,
+  email,
+  password,
+  first_name,
+  last_name,
+  username,
+  date_of_birth,
+  location,
+  avatar,
+  bio,
+}) => {
+  const response = await fetch(
+    `https://codegather.onrender.com/api/profiles/${_id}`,
+    {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        profilePatches: {
+          _id,
+          email,
+          password,
+          first_name,
+          last_name,
+          username,
+          date_of_birth,
+          location,
+          avatar,
+          bio,
+        },
+      }),
+    }
+  );
+  const data = response.json();
+  return data;
+};
