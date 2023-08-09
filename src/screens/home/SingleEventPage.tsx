@@ -9,13 +9,22 @@ import {
 import React, { useEffect, useState } from "react";
 import { styles } from "../../styles/Styling";
 import { Article, Profile } from "../../utils/RenderFunctions";
-import { getEventData, getEventDataById } from "../../utils/CodeGatherApi";
+import {
+  getEventData,
+  getEventDataById,
+  patchEvent,
+} from "../../utils/CodeGatherApi";
 import { convertLongAndLat } from "../../utils/CityApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SingleEventPage({ route }: { route: any }) {
   const [article, setArticle] = useState<Article>({});
   const [isLoading, setIsLoading] = useState(true);
   const [locationData, setLocationData] = useState();
+  const [profileId, setProfileId] = useState("");
+  const [attendButtonPressed, setAttendButtonPressed] = useState(false);
+  const [attendError, setAttendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const eventParam = route.params;
 
   useEffect(() => {
@@ -30,6 +39,11 @@ export default function SingleEventPage({ route }: { route: any }) {
       })
       .then((data) => {
         setLocationData(data.address.city);
+        return AsyncStorage.getItem("profileId");
+      })
+      .then((id) => {
+        const { profile_id } = JSON.parse(id);
+        setProfileId(profile_id);
       });
   }, []);
 
@@ -80,9 +94,31 @@ export default function SingleEventPage({ route }: { route: any }) {
               {article.description}
             </Text>
           </View>
-          <Pressable style={SingleEventStyles.attend_event_btn}>
+          <Pressable
+            style={SingleEventStyles.attend_event_btn}
+            onPress={() => {
+              setAttendButtonPressed(true);
+              patchEvent(article._id, profileId)
+                .then((res) => {
+                  if (res.success) {
+                    setAttendError(false);
+                  } else {
+                    setAttendError(true);
+                    setErrorMessage(res.msg);
+                  }
+                })
+                .catch((err) => setAttendError(true));
+            }}
+          >
             <Text>Attend Event</Text>
           </Pressable>
+          {attendButtonPressed ? (
+            !attendError ? (
+              <Text>Successful</Text>
+            ) : (
+              <Text>{errorMessage}</Text>
+            )
+          ) : null}
         </View>
       )}
     </>
