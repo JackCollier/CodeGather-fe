@@ -86,9 +86,34 @@ function Profile() {
                     }}
                   />
                   <View style={profileStyles.profileText}>
-                    <Text style={profileStyles.fullname}>
-                      {profile.first_name + profile.last_name}
-                    </Text>
+                    {editPressed ? (
+                      <>
+                        <TextInput
+                          style={{ ...profileStyles.fullname, borderWidth: 1 }}
+                          onChangeText={(text) =>
+                            setProfileStorage((prev) => {
+                              return { ...prev, first_name: text };
+                            })
+                          }
+                        >
+                          Enter First Name
+                        </TextInput>
+                        <TextInput
+                          style={{ ...profileStyles.fullname, borderWidth: 1 }}
+                          onChangeText={(text) =>
+                            setProfileStorage((prev) => {
+                              return { ...prev, last_name: text };
+                            })
+                          }
+                        >
+                          Enter First Name
+                        </TextInput>
+                      </>
+                    ) : (
+                      <Text style={profileStyles.bio}>
+                        {profile.first_name + " " + profile.last_name}
+                      </Text>
+                    )}
                     <Text style={profileStyles.userName}>
                       @{profile.username}
                     </Text>
