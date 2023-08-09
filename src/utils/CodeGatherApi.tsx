@@ -174,3 +174,19 @@ export const patchProfile = async ({
   const data = response.json();
   return data;
 };
+
+export const patchEvent = async (event_id: string, profile_id) => {
+  const response = await fetch(
+    `https://codegather.onrender.com/api/events/${event_id}`,
+    {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ profile_id }),
+    }
+  );
+  const data = response.json();
+  return data;
+};
