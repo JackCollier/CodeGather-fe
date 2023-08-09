@@ -29,21 +29,17 @@ function Profile() {
 
   useEffect(() => {
     setProfileStorage(profile);
-  }, [editSaved]);
+  }, [editPressed]);
 
   useEffect(() => {
     setProfileStorage(profile);
     AsyncStorage.getItem("profileId").then((data) => {});
   }, []);
 
-  console.log("pstorage", profileStorage);
-
   useEffect(() => {
     patchProfile(profileStorage)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+      .then((res) => {})
+      .catch((err) => {});
   }, [editSaved]);
 
   const renderSocials = ({ item }: { item: any }) => {
