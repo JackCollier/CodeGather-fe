@@ -42,16 +42,18 @@ export default function SignIn({ navigation }: any) {
     <SafeAreaView
       style={{
         ...styles.outerContainer,
-        backgroundColor: "#8cb3d9",
+        backgroundColor: "white",
       }}
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
       >
-        <View style={styles.form}>
+        <View style={{ ...styles.form }}>
           <View>
-            <Text style={{ ...styles.text_input_label }}>Email</Text>
+            <Text style={{ ...styles.text_input_label, letterSpacing: 1.3 }}>
+              Email
+            </Text>
             <TextInput
               onChangeText={(text) =>
                 setSignInDetails((currentValue) => {
@@ -61,7 +63,11 @@ export default function SignIn({ navigation }: any) {
                   }
                 })
               }
-              style={{ ...styles.text_input, width: 200 }}
+              style={{
+                ...styles.text_input,
+                width: 300,
+                paddingHorizontal: 10,
+              }}
               placeholder="Email..."
               keyboardType="email-address"
               autoCapitalize="none"
@@ -69,9 +75,15 @@ export default function SignIn({ navigation }: any) {
             />
           </View>
           <View>
-            <Text style={{ ...styles.text_input_label }}>Password</Text>
+            <Text style={{ ...styles.text_input_label, letterSpacing: 1.3 }}>
+              Password
+            </Text>
             <TextInput
-              style={{ ...styles.text_input, width: 200 }}
+              style={{
+                ...styles.text_input,
+                width: 300,
+                paddingHorizontal: 10,
+              }}
               placeholder="Password..."
               onChangeText={(text) => {
                 setError(false);
@@ -86,7 +98,7 @@ export default function SignIn({ navigation }: any) {
           </View>
           {error && <Text style={{ color: "red" }}>Error Logging in</Text>}
           <Pressable
-            style={styles.btn}
+            style={{ ...styles.btn, width: 300 }}
             onPress={() => {
               handleLogin(signInDetails.email, signInDetails.password);
             }}

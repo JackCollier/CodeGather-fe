@@ -95,7 +95,7 @@ export default function SignUp({ navigation }: { navigation: any }) {
         <ScrollView>
           <View style={{ ...styles.form, padding: 10, width: "100%" }}>
             {/* Your Details*/}
-            <View>
+            <View style={{ gap: 5 }}>
               <Text style={{ ...styles.text_input_label }}>Your Details</Text>
               <View style={{ flexDirection: "row" }}>
                 <TextInput

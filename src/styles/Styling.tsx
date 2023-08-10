@@ -7,14 +7,11 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   form: {
-    borderWidth: 0.2,
     gap: 30,
     padding: 50,
     paddingVertical: 70,
-    borderColor: "black",
     borderRadius: 2,
     marginBottom: 50,
-
     backgroundColor: "white",
   },
   text_input_label: {
