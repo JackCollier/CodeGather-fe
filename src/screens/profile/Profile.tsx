@@ -81,10 +81,22 @@ function Profile() {
         <SafeAreaView style={{ ...styles.outerContainer }}>
           <View style={profileStyles.container}>
             <View style={profileStyles.profileContainer}>
+              <Pressable
+                style={{
+                  position: "absolute",
+                  right: 10,
+                  top: -5,
+                  zIndex: 1000,
+                }}
+                onPress={() => setEditPressed((prev) => !prev)}
+              >
+                <Text>Edit</Text>
+              </Pressable>
+
               <View
                 style={{
                   ...profileStyles.topOfProfile,
-                  backgroundColor: "#8cb3d9",
+
                   width: "100%",
                 }}
               >
@@ -125,7 +137,9 @@ function Profile() {
                       </>
                     ) : (
                       <Text style={{ fontSize: 25 }}>
-                        {profile.first_name + " " + profile.last_name}
+                        {profile.first_name.toUpperCase() +
+                          " " +
+                          profile.last_name}
                       </Text>
                     )}
                     <Text style={profileStyles.userName}>
@@ -147,14 +161,17 @@ function Profile() {
                     Enter Bio
                   </TextInput>
                 ) : (
-                  <Text style={{ ...profileStyles.bio, marginLeft: 130 }}>
-                    {profile.bio}
-                  </Text>
+                  <>
+                    <Text></Text>
+                    <Text style={{ ...profileStyles.bio, marginLeft: 10 }}>
+                      Bio:{profile.bio}
+                    </Text>
+                  </>
                 )}
                 <Text
                   style={{
                     ...profileStyles.social_media_title,
-                    marginLeft: 150,
+                    marginLeft: 30,
                   }}
                 >
                   Social Media links
@@ -181,15 +198,7 @@ function Profile() {
                     renderItem={renderLangs}
                   />
                 </View>
-                <View
-                  style={{
-                    width: 0.5,
-                    height: "100%",
-                    backgroundColor: "black",
-                    opacity: 0.2,
-                    marginLeft: -30,
-                  }}
-                ></View>
+
                 <View>
                   <Text style={{ fontSize: 16 }}>Interests</Text>
                   {/* <FlatList data={userData.interests} renderItem={renderLangs} /> */}
@@ -198,18 +207,8 @@ function Profile() {
             </View>
             <View style={profileStyles.eventContainer}>
               <Text>Events Hosting</Text>
-              <View
-                style={{
-                  width: 0.5,
-                  height: "100%",
-                  backgroundColor: "black",
-                  opacity: 0.2,
-                }}
-              ></View>
+
               <Text>Events atteding</Text>
-              <Pressable onPress={() => setEditPressed((prev) => !prev)}>
-                <Text>Edit</Text>
-              </Pressable>
 
               {editPressed && (
                 <Pressable
@@ -244,8 +243,7 @@ const profileStyles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "grey",
-    marginTop: 20,
+    marginTop: 50,
   },
   row: {
     flexDirection: "row",
@@ -256,8 +254,6 @@ const profileStyles = StyleSheet.create({
   profileContainer: {
     flex: 1.4,
     width: "100%",
-    // padding: 10,
-    backgroundColor: "orange",
   },
   eventContainer: {
     flex: 1,
@@ -290,6 +286,8 @@ const profileStyles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 50,
+    marginRight: 30,
+    marginLeft: 20,
   },
   fullname: {
     fontSize: 30,
