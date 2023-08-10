@@ -148,7 +148,7 @@ export default function Home({ navigation }: any) {
             <View style={homeStyles.horizontal_list_container}>
               <Text
                 style={{
-                  backgroundColor: "#cacfcc",
+                  backgroundColor: "#8cb3d9",
                   padding: 6,
                 }}
               >
@@ -164,7 +164,7 @@ export default function Home({ navigation }: any) {
             <View style={homeStyles.vertical_list_container}>
               <Text
                 style={{
-                  backgroundColor: "#cacfcc",
+                  backgroundColor: "#8cb3d9",
                   padding: 6,
                 }}
               >
