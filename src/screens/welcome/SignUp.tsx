@@ -29,7 +29,7 @@ export default function SignUp({ navigation }: { navigation: any }) {
     message: "",
   });
 
-  console.log("from signup", selected);
+  // console.log("from signup", selected);
 
   const [signUpDetail, setSignUpDetail] = useState({
     email: "",

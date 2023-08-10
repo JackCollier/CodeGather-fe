@@ -16,6 +16,8 @@ import { useContext, useEffect, useState } from "react";
 import MyContext from "../../contexts/Context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { patchProfile } from "../../utils/CodeGatherApi";
+import DefaultImage from "../../assets/avatar.png";
+// import DefaultImage from '../assets/image.png';
 
 function Profile() {
   const [profileStorage, setProfileStorage] = useState(null);
@@ -28,6 +30,10 @@ function Profile() {
   const [editSaved, setEditSaved] = useState(false);
 
   const [proLang, setProLang] = useState("");
+
+  console.log("profile---------", profile?.avatar);
+  console.log("profile---------", profile?.avatar);
+  const DEFAULT_IMAGE = Image.resolveAssetSource(DefaultImage).uri;
 
   useEffect(() => {
     setProfileStorage(profile);
@@ -72,16 +78,26 @@ function Profile() {
   return (
     <>
       {profile ? (
-        <SafeAreaView style={styles.outerContainer}>
+        <SafeAreaView style={{ ...styles.outerContainer }}>
           <View style={profileStyles.container}>
             <View style={profileStyles.profileContainer}>
-              <View style={profileStyles.topOfProfile}>
+              <View
+                style={{
+                  ...profileStyles.topOfProfile,
+                  backgroundColor: "#8cb3d9",
+                  width: "100%",
+                }}
+              >
                 <View style={profileStyles.row}>
                   <Image
                     style={profileStyles.avatar}
-                    source={{
-                      uri: profile.avatar,
-                    }}
+                    source={
+                      profile.avatar
+                        ? {
+                            uri: profile.avatar,
+                          }
+                        : require("../../assets/avatar.png")
+                    }
                   />
                   <View style={profileStyles.profileText}>
                     {editPressed ? (
@@ -108,7 +124,7 @@ function Profile() {
                         </TextInput>
                       </>
                     ) : (
-                      <Text style={profileStyles.bio}>
+                      <Text style={{ fontSize: 25 }}>
                         {profile.first_name + " " + profile.last_name}
                       </Text>
                     )}
@@ -131,9 +147,16 @@ function Profile() {
                     Enter Bio
                   </TextInput>
                 ) : (
-                  <Text style={profileStyles.bio}>{profile.bio}</Text>
+                  <Text style={{ ...profileStyles.bio, marginLeft: 130 }}>
+                    {profile.bio}
+                  </Text>
                 )}
-                <Text style={profileStyles.social_media_title}>
+                <Text
+                  style={{
+                    ...profileStyles.social_media_title,
+                    marginLeft: 150,
+                  }}
+                >
                   Social Media links
                 </Text>
                 <View>
@@ -158,7 +181,15 @@ function Profile() {
                     renderItem={renderLangs}
                   />
                 </View>
-
+                <View
+                  style={{
+                    width: 0.5,
+                    height: "100%",
+                    backgroundColor: "black",
+                    opacity: 0.2,
+                    marginLeft: -30,
+                  }}
+                ></View>
                 <View>
                   <Text style={{ fontSize: 16 }}>Interests</Text>
                   {/* <FlatList data={userData.interests} renderItem={renderLangs} /> */}
@@ -167,6 +198,14 @@ function Profile() {
             </View>
             <View style={profileStyles.eventContainer}>
               <Text>Events Hosting</Text>
+              <View
+                style={{
+                  width: 0.5,
+                  height: "100%",
+                  backgroundColor: "black",
+                  opacity: 0.2,
+                }}
+              ></View>
               <Text>Events atteding</Text>
               <Pressable onPress={() => setEditPressed((prev) => !prev)}>
                 <Text>Edit</Text>
@@ -202,25 +241,30 @@ function Profile() {
 const profileStyles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "grey",
+    marginTop: 20,
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingRight: 60,
+    // paddingRight: 60,
     paddingTop: 10,
   },
   profileContainer: {
     flex: 1.4,
     width: "100%",
-    padding: 10,
+    // padding: 10,
+    backgroundColor: "orange",
   },
   eventContainer: {
     flex: 1,
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
+    marginTop: 10,
   },
   topOfProfile: {
     flex: 1.95,
@@ -229,15 +273,16 @@ const profileStyles = StyleSheet.create({
   profileText: {
     gap: 10,
     textAlign: "center",
+    marginRight: 50,
   },
   bottomOfProfile: {
     flex: 1,
     width: 360,
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignSelf: "center",
 
-    marginTop: 100,
+    marginTop: 10,
     paddingHorizontal: 20,
     fontSize: 20,
   },

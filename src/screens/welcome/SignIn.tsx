@@ -23,11 +23,11 @@ export default function SignIn({ navigation }: any) {
 
   const handleLogin = (email: string, password: string) => {
     postLogin(email, password).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.success) {
         setError(false);
         navigation.replace("Tab");
-        console.log("resID", res.profile_id);
+        // console.log("resID", res.profile_id);
         AsyncStorage.setItem(
           "profileId",
           JSON.stringify({ profile_id: res.profile_id })

@@ -33,7 +33,7 @@ export default function HostEvents() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [eventData, setEventData] = useState({
-    user_id: "",
+    profile: "",
     event_title: "",
     location: {
       lat: 0,
@@ -49,6 +49,8 @@ export default function HostEvents() {
   const [address, setAddress] = useState("");
   const { setIsEventPosted } = useContext(MyContext);
 
+  console.log(eventData);
+
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -57,7 +59,9 @@ export default function HostEvents() {
     AsyncStorage.getItem("profileId").then((id) => {
       const res = JSON.parse(id);
       setEventData((currenValue) => {
-        return { ...currenValue, user_id: res.profile_id };
+        // console.log("eventData-----------", eventData);
+        // console.log("res.profile_id-----------", res.profile_id);
+        return { ...currenValue, profile: res.profile_id };
       });
     });
   }, []);
@@ -81,15 +85,20 @@ export default function HostEvents() {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.9,
       base64: true,
     });
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      // console.log(`data:image/jpeg;base64,${result.assets[0].base64}`);
 
       setEventData((currentData) => {
-        return { ...currentData, image: result.assets[0].uri };
+        // return { ...currentData, image: result.assets[0].uri };
+        return {
+          ...currentData,
+          image: `data:image/jpeg;base64,${result.assets[0].base64}`,
+        };
       });
     }
   };
@@ -99,24 +108,26 @@ export default function HostEvents() {
       return { ...currentData, topics: topics };
     });
 
+    console.log(eventData);
+
     postEvent(eventData)
       .then((response) => {
         setAddress("");
         setTopic("");
-        setEventData({
-          user_id: "",
-          event_title: "",
-          location: {
-            lat: 0,
-            long: 0,
-          },
-          size_limit: 0,
-          image: "",
-          date_time: "",
-          topics: "",
-          attending: [],
-          description: "",
-        });
+        // setEventData({
+        //   profile_id: "",
+        //   event_title: "",
+        //   location: {
+        //     lat: 0,
+        //     long: 0,
+        //   },
+        //   size_limit: 0,
+        //   image: "",
+        //   date_time: "",
+        //   topics: "",
+        //   attending: [],
+        //   description: "",
+        // });
       })
       .catch((err) => console.log("error---->>", err));
 
