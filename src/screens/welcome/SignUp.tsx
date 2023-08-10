@@ -85,7 +85,7 @@ export default function SignUp({ navigation }: { navigation: any }) {
     <SafeAreaView
       style={{
         ...styles.outerContainer,
-        backgroundColor: "#8cb3d9",
+        backgroundColor: "white",
       }}
     >
       <KeyboardAvoidingView
