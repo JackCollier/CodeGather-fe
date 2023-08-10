@@ -6,7 +6,7 @@ import {
   Pressable,
   StyleSheet,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { styles } from "../../styles/Styling";
 import { Article, Profile } from "../../utils/RenderFunctions";
 import {
@@ -16,6 +16,7 @@ import {
 } from "../../utils/CodeGatherApi";
 import { convertLongAndLat } from "../../utils/CityApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import MyContext from "../../contexts/Context";
 
 export default function SingleEventPage({ route }: { route: any }) {
   const [article, setArticle] = useState<Article>({});
@@ -26,6 +27,7 @@ export default function SingleEventPage({ route }: { route: any }) {
   const [attendError, setAttendError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const eventParam = route.params;
+  const { isEventPosted, setIsEventPosted } = useContext(MyContext);
 
   useEffect(() => {
     getEventDataById(eventParam.event_id)
@@ -45,11 +47,13 @@ export default function SingleEventPage({ route }: { route: any }) {
         const { profile_id } = JSON.parse(id);
         setProfileId(profile_id);
       });
-  }, []);
+  }, [isEventPosted]);
 
   const renderTopics = ({ item }: { item: string[] }) => {
     return <Text style={{ fontSize: 20 }}>{item}</Text>;
   };
+
+  console.log(article?.attending);
 
   return (
     <>
@@ -95,8 +99,10 @@ export default function SingleEventPage({ route }: { route: any }) {
             </Text>
           </View>
           <Pressable
+            disabled={article.attending?.length ? true : false}
             style={SingleEventStyles.attend_event_btn}
             onPress={() => {
+              setIsEventPosted((prev) => !prev);
               setAttendButtonPressed(true);
               patchEvent(article._id, profileId)
                 .then((res) => {
@@ -110,7 +116,11 @@ export default function SingleEventPage({ route }: { route: any }) {
                 .catch((err) => setAttendError(true));
             }}
           >
-            <Text>Attend Event</Text>
+            <Text style={{ color: "white", fontWeight: "500", fontSize: 16 }}>
+              {article.attending?.length
+                ? "You are Registerd!"
+                : "Attend Event"}
+            </Text>
           </Pressable>
           {attendButtonPressed ? (
             !attendError ? (
